@@ -1,186 +1,81 @@
 #pragma once
 
-#include <vector>
-#include <iostream>
+#include <Eigen/Dense>
+#include <tuple>
 
-#include <type_traits>
-
-namespace neural 
+namespace neural
 {
 
+using ui = std::uint32_t;
+
+template <ui A, ui B, ui... Is>
+auto make_matrix_tuple()
+{   
+    if constexpr(sizeof...(Is) == 0)
+    {
+        return std::tuple<Eigen::Matrix<float, B, A>>{};
+    }
+    else
+    {
+        return std::tuple_cat(make_matrix_tuple<B, A>(), 
+                            make_matrix_tuple<B, Is...>());
+    }
+}
+
+template <ui B, ui... Is>
+auto make_vector_return()
+{
+	if constexpr(sizeof...(Is) == 0)
+    {
+        return Eigen::Matrix<float, B, 1>{};
+    }
+    else
+    {
+		return make_vector_return<Is...>();
+	}
+}
+
+// Add scalar type?
+template<ui First, ui Second, ui... Further>
 class Net
 {
 public:
-	// Net(std::vector<unsigned int> nodes)
-	// {
-	// 	setSize(nodes);
-	// }
-
-	void setSize(std::vector<unsigned int> nodes)
+	Net()
 	{
-		m_nodes = nodes;
-
-		unsigned int weights = 0;
-		for (auto i = nodes.begin(); i != nodes.end() - 1; ++i)
-		{
-			weights += (*i) * (*(i + 1));
-		}
-
-		m_weights = std::vector<float>(weights);
+		init<0, First, Second, Further...>();
 	}
 
-	std::vector<float> process(std::vector<float> in)
+	decltype(make_vector_return<Second, Further...>()) process(Eigen::Matrix<float, First, 1> input)
 	{
-		if (in.size() < m_nodes[0])
-			in.resize(m_nodes[0]);
-
-		int steps = m_nodes.size() - 1;
-		auto i_weight = m_weights.begin();
-
-		std::vector<float> out;
-
-		for (int step = 0; step < steps; ++step)
-		{
-			out = std::vector<float>(m_nodes[step + 1]);
-
-			step_once<std::vector<float>, std::vector<float>>(in, out, i_weight);
-
-			in = out;
-		}
-
-		return out;
+		return process<0, First, Second, Further...>(input);
 	}
 
-	template<typename Tin>
-	std::vector<float> process(Tin input)
+private:	
+	template<ui n, ui A, ui B, ui... Is>
+	void init()
 	{
-		auto i_weight = m_weights.begin();
-		std::vector<float> out(m_nodes[1]);
+		std::get<n>(m_weights) = Eigen::Matrix<float, B, A>::Zero();
 
-		step_once<Tin, std::vector<float>>(input, out, i_weight);
-
-		int steps = m_nodes.size() - 1;
-
-		auto in = out;
-		for (int step = 1; step < steps; ++step)
+		if constexpr(sizeof...(Is) != 0)
 		{
-			out = std::vector<float>(m_nodes[step + 1]);
-
-			step_once<std::vector<float>, std::vector<float>>(in, out, i_weight);
-
-			in = out;
-		}
-
-		return out;
-	}
-
-	template<typename Tin>
-	std::vector<float> process(std::vector<Tin> input)
-	{
-		auto i_weight = m_weights.begin();
-		std::vector<float> out(m_nodes[1]);
-
-		step_once<std::vector<Tin>, std::vector<float>>(input, out, i_weight);
-
-		int steps = m_nodes.size() - 1;
-
-		auto in = out;
-		for (int step = 1; step < steps; ++step)
-		{
-			out = std::vector<float>(m_nodes[step + 1]);
-
-			step_once<std::vector<float>, std::vector<float>>(in, out, i_weight);
-
-			in = out;
-		}
-
-		return out;
-	}
-
-	template<typename Tin, typename Tout>
-	void process(Tin input, Tout& output)
-	{
-		auto i_weight = m_weights.begin();
-
-		int steps = m_nodes.size() - 2;
-		//Tout final_out(m_nodes[steps + 1]);
-
-		if (steps == 0)
-		{
-			step_once<Tin, Tout>(input, output, i_weight);
-			return;
-			//return output;
-		}
-
-		std::vector<float> out(m_nodes[1]);
-
-		step_once<Tin, std::vector<float>>(input, out, i_weight);
-
-		auto in = out;
-		for (int step = 1; step < steps; ++step)
-		{
-			out = std::vector<float>(m_nodes[step + 1]);
-
-			step_once<std::vector<float>, std::vector<float>>(in, out, i_weight);
-
-			in = out;
-		}
-
-		step_once<std::vector<float>, Tout>(in, output, i_weight);
-
-		//return final_out;
-	}
-
-	template<typename Tin, typename Tout>
-	void process(std::vector<Tin> input, Tout& output)
-	{
-		auto i_weight = m_weights.begin();
-
-		int steps = m_nodes.size() - 2;
-		//Tout final_out(m_nodes[steps + 1]);
-
-		if (steps == 0)
-		{
-			step_once<std::vector<Tin>, Tout>(input, output, i_weight);
-			return;
-			//return output;
-		}
-
-		std::vector<float> out(m_nodes[1]);
-
-		step_once<std::vector<Tin>, std::vector<float>>(input, out, i_weight);
-
-		auto in = out;
-		for (int step = 1; step < steps; ++step)
-		{
-			out = std::vector<float>(m_nodes[step + 1]);
-
-			step_once<std::vector<float>, std::vector<float>>(in, out, i_weight);
-
-			in = out;
-		}
-
-		step_once<std::vector<float>, Tout>(in, output, i_weight);
-
-		//return final_out;
-	}
-
-protected:
-	// GPU Optimise?
-	template<typename Tin, typename Tout>
-	void step_once(Tin& in, Tout& out, std::vector<float>::iterator i_weight)
-	{
-		for (auto i_out = out.begin(); i_out != out.end(); ++i_out)
-		{
-			for (auto i_in = in.begin(); i_in != in.end(); ++i_in)
-			{
-				*i_out += (*i_in) * (*(i_weight++));
-			}
+			init<n+1, B, Is...>();
 		}
 	}
 
-	std::vector<unsigned int> m_nodes;
-	std::vector<float> m_weights;
+	template<ui n, ui A, ui B, ui... Is>
+	Eigen::Matrix<float, B, 1> process(Eigen::Matrix<float, A, 1> input)
+	{
+		if constexpr(sizeof...(Is) == 0)
+	    {
+	        return std::get<n>(m_weights) * input;
+	    }
+	    else
+	    {
+			return process<n+1, B, Is...>(std::get<n>(m_weights) * input);
+		}
+	}
+
+	decltype(make_matrix_tuple<First, Second, Further...>()) m_weights;
 };
 
 }
