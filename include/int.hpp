@@ -2,6 +2,10 @@
 
 #include <vector>
 #include <iterator>
+#include <cstdlib>
+
+#include "neural/train.hpp"
+#include "neural/net.hpp"
 
 class IntIter : public std::iterator<std::input_iterator_tag, int>
 {
@@ -54,4 +58,34 @@ public:
 	IntIter end() { return IntIter(); }
 private:
 	int m_value;
+};
+
+class AddTrainer: public neural::Trainer
+{
+public:
+	AddTrainer()
+	{
+		setSize({2, 1});
+	}
+
+	float costf(std::vector<float> output, std::vector<float> expected)
+	{
+		return output[0] - expected[0];
+	}
+
+	std::vector<neural::TestData> data_set()
+	{
+		std::vector<neural::TestData> test_data(10000);
+
+		for (auto i = test_data.begin(); i != test_data.end(); ++i)
+		{
+			float a = rand() % 1024;
+			float b = rand() % 1024;
+
+			(*i).input = {a, b};
+			(*i).expected = {a + b};
+		}
+
+		return test_data;
+	}
 };

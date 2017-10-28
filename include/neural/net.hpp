@@ -5,13 +5,21 @@
 
 #include <type_traits>
 
-namespace neural {
+namespace neural 
+{
 
 class Net
 {
 public:
-	Net(std::vector<unsigned int> nodes) : m_nodes(nodes)
+	// Net(std::vector<unsigned int> nodes)
+	// {
+	// 	setSize(nodes);
+	// }
+
+	void setSize(std::vector<unsigned int> nodes)
 	{
+		m_nodes = nodes;
+
 		unsigned int weights = 0;
 		for (auto i = nodes.begin(); i != nodes.end() - 1; ++i)
 		{
@@ -35,7 +43,7 @@ public:
 		{
 			out = std::vector<float>(m_nodes[step + 1]);
 
-			stepOnce<std::vector<float>, std::vector<float>>(in, out, i_weight);
+			step_once<std::vector<float>, std::vector<float>>(in, out, i_weight);
 
 			in = out;
 		}
@@ -43,13 +51,13 @@ public:
 		return out;
 	}
 
-	template<class Tin>
+	template<typename Tin>
 	std::vector<float> process(Tin input)
 	{
 		auto i_weight = m_weights.begin();
 		std::vector<float> out(m_nodes[1]);
 
-		stepOnce<Tin, std::vector<float>>(input, out, i_weight);
+		step_once<Tin, std::vector<float>>(input, out, i_weight);
 
 		int steps = m_nodes.size() - 1;
 
@@ -58,7 +66,7 @@ public:
 		{
 			out = std::vector<float>(m_nodes[step + 1]);
 
-			stepOnce<std::vector<float>, std::vector<float>>(in, out, i_weight);
+			step_once<std::vector<float>, std::vector<float>>(in, out, i_weight);
 
 			in = out;
 		}
@@ -66,13 +74,13 @@ public:
 		return out;
 	}
 
-	template<class Tin>
+	template<typename Tin>
 	std::vector<float> process(std::vector<Tin> input)
 	{
 		auto i_weight = m_weights.begin();
 		std::vector<float> out(m_nodes[1]);
 
-		stepOnce<std::vector<Tin>, std::vector<float>>(input, out, i_weight);
+		step_once<std::vector<Tin>, std::vector<float>>(input, out, i_weight);
 
 		int steps = m_nodes.size() - 1;
 
@@ -81,7 +89,7 @@ public:
 		{
 			out = std::vector<float>(m_nodes[step + 1]);
 
-			stepOnce<std::vector<float>, std::vector<float>>(in, out, i_weight);
+			step_once<std::vector<float>, std::vector<float>>(in, out, i_weight);
 
 			in = out;
 		}
@@ -89,7 +97,7 @@ public:
 		return out;
 	}
 
-	template<class Tin, class Tout>
+	template<typename Tin, typename Tout>
 	void process(Tin input, Tout& output)
 	{
 		auto i_weight = m_weights.begin();
@@ -99,31 +107,31 @@ public:
 
 		if (steps == 0)
 		{
-			stepOnce<Tin, Tout>(input, output, i_weight);
+			step_once<Tin, Tout>(input, output, i_weight);
 			return;
 			//return output;
 		}
 
 		std::vector<float> out(m_nodes[1]);
 
-		stepOnce<Tin, std::vector<float>>(input, out, i_weight);
+		step_once<Tin, std::vector<float>>(input, out, i_weight);
 
 		auto in = out;
 		for (int step = 1; step < steps; ++step)
 		{
 			out = std::vector<float>(m_nodes[step + 1]);
 
-			stepOnce<std::vector<float>, std::vector<float>>(in, out, i_weight);
+			step_once<std::vector<float>, std::vector<float>>(in, out, i_weight);
 
 			in = out;
 		}
 
-		stepOnce<std::vector<float>, Tout>(in, output, i_weight);
+		step_once<std::vector<float>, Tout>(in, output, i_weight);
 
 		//return final_out;
 	}
 
-	template<class Tin, class Tout>
+	template<typename Tin, typename Tout>
 	void process(std::vector<Tin> input, Tout& output)
 	{
 		auto i_weight = m_weights.begin();
@@ -133,34 +141,34 @@ public:
 
 		if (steps == 0)
 		{
-			stepOnce<std::vector<Tin>, Tout>(input, output, i_weight);
+			step_once<std::vector<Tin>, Tout>(input, output, i_weight);
 			return;
 			//return output;
 		}
 
 		std::vector<float> out(m_nodes[1]);
 
-		stepOnce<std::vector<Tin>, std::vector<float>>(input, out, i_weight);
+		step_once<std::vector<Tin>, std::vector<float>>(input, out, i_weight);
 
 		auto in = out;
 		for (int step = 1; step < steps; ++step)
 		{
 			out = std::vector<float>(m_nodes[step + 1]);
 
-			stepOnce<std::vector<float>, std::vector<float>>(in, out, i_weight);
+			step_once<std::vector<float>, std::vector<float>>(in, out, i_weight);
 
 			in = out;
 		}
 
-		stepOnce<std::vector<float>, Tout>(in, output, i_weight);
+		step_once<std::vector<float>, Tout>(in, output, i_weight);
 
 		//return final_out;
 	}
 
-private:
+protected:
 	// GPU Optimise?
-	template<class Tin, class Tout>
-	void stepOnce(Tin& in, Tout& out, std::vector<float>::iterator i_weight)
+	template<typename Tin, typename Tout>
+	void step_once(Tin& in, Tout& out, std::vector<float>::iterator i_weight)
 	{
 		for (auto i_out = out.begin(); i_out != out.end(); ++i_out)
 		{
