@@ -1,0 +1,1369 @@
+m_weight:  0.680375 -0.211234
+m_bias: 0.566198
+input:  0.112305
+0.0791016
+output: 0.625899
+expected: 0.0957031
+d_weight:  -0.119087 -0.0838786
+d_bias: -1.06039
+0.462941
+m_weight:  0.561289 -0.295113
+m_bias: -0.494193
+input:  0.249023
+0.0722656
+output: -0.375746
+expected: 0.160645
+d_weight:  0.267147 0.0775251
+d_bias: 1.07278
+0.784173
+m_weight:  0.828436 -0.217588
+m_bias: 0.578587
+input: 0.230469
+0.790039
+output: 0.597613
+expected: 0.510254
+d_weight: -0.0402671  -0.138034
+d_bias: -0.174718
+0.693025
+m_weight:  0.788169 -0.355622
+m_bias: 0.403869
+input: 0.200195
+0.181641
+output: 0.497061
+expected: 0.190918
+d_weight: -0.122577 -0.111216
+d_bias: -0.612287
+0.239251
+m_weight:  0.665592 -0.466838
+m_bias: -0.208418
+input: 0.916992
+0.486328
+output: 0.174889
+expected: 0.70166
+d_weight: 0.966091 0.512368
+d_bias: 1.05354
+2.61867
+m_weight:   1.63168 0.0455297
+m_bias: 0.845126
+input: 0.745117
+ 0.47168
+output: 2.0824
+expected: 0.608398
+d_weight:  -2.1966 -1.39051
+d_bias: -2.948
+16.6387
+m_weight: -0.564919  -1.34498
+m_bias: -2.10287
+input: 0.318359
+0.121094
+output: -2.44559
+expected: 0.219727
+d_weight:  1.69705 0.645505
+d_bias: 5.33062
+56.9335
+m_weight:   1.13214 -0.699475
+m_bias: 3.22775
+input:  0.689453
+0.0820312
+output: 3.95093
+expected: 0.385742
+d_weight:  -4.91606 -0.584914
+d_bias: -7.13038
+80.2104
+m_weight: -3.78392 -1.28439
+m_bias: -3.90262
+input: 0.992188
+0.776367
+output: -8.65414
+expected: 0.884277
+d_weight: 18.9278 14.8106
+d_bias: 19.0768
+5631.37
+m_weight: 15.1439 13.5262
+m_bias: 15.1742
+input: 0.476562
+0.475586
+output: 28.8241
+expected: 0.476074
+d_weight: -27.0192 -26.9639
+d_bias: -56.6961
+1.32376e+06
+m_weight: -11.8753 -13.4376
+m_bias: -41.5219
+input: 0.887695
+0.865234
+output: -63.6902
+expected: 0.876465
+d_weight: 114.631 111.731
+d_bias: 129.133
+5.35698e+06
+m_weight: 102.756  98.293
+m_bias: 87.6115
+input: 0.337891
+0.294922
+output: 151.32
+expected: 0.316406
+d_weight: -102.046 -89.0688
+d_bias: -302.008
+1.84423e+09
+m_weight: 0.710022  9.22421
+m_bias: -214.397
+input:  0.59668
+0.549805
+output: -208.901
+expected: 0.573242
+d_weight: 249.979  230.34
+d_bias: 418.949
+1.50273e+07
+m_weight: 250.689 239.565
+m_bias: 204.553
+input: 0.905273
+0.196289
+output: 478.518
+expected: 0.550781
+d_weight: -865.383  -187.64
+d_bias: -955.935
+1.09873e+11
+m_weight: -614.694  51.9249
+m_bias: -751.383
+input: 0.900391
+0.849609
+output: -1260.73
+expected: 0.875
+d_weight: 2271.88 2143.75
+d_bias: 2523.21
+2.42278e+12
+m_weight: 1657.18 2195.67
+m_bias: 1771.83
+input:  0.298828
+0.0126953
+output: 2294.92
+expected: 0.155762
+d_weight: -1371.48 -58.2654
+d_bias: -4589.52
+1.59394e+14
+m_weight: 285.704 2137.41
+m_bias: -2817.69
+input: 0.928711
+0.547852
+output: -1381.38
+expected: 0.738281
+d_weight: 2567.17 1514.39
+d_bias: 2764.23
+3.55315e+13
+m_weight: 2852.88 3651.79
+m_bias: -53.4639
+input: 0.0859375
+  0.15918
+output: 772.996
+expected: 0.122559
+d_weight: -132.838 -246.052
+d_bias: -1545.75
+5.13098e+13
+m_weight: 2720.04 3405.74
+m_bias: -1599.21
+input: 0.337891
+0.286133
+output: 294.358
+expected: 0.312012
+d_weight: -198.711 -168.273
+d_bias: -588.092
+6.57039e+12
+m_weight: 2521.33 3237.47
+m_bias: -2187.3
+input:  0.34082
+0.254883
+output: -502.809
+expected: 0.297852
+d_weight: 342.938 256.467
+d_bias: 1006.21
+1.70482e+13
+m_weight: 2864.26 3493.94
+m_bias: -1181.09
+input:  0.772461
+0.0859375
+output: 1331.7
+expected: 0.429199
+d_weight: -2056.71 -228.813
+d_bias: -2662.55
+1.44701e+14
+m_weight: 807.551 3265.12
+m_bias: -3843.64
+input:  0.727539
+0.0917969
+output: -2956.38
+expected: 0.409668
+d_weight: 4302.37 542.849
+d_bias: 5913.59
+3.95627e+14
+m_weight: 5109.92 3807.97
+m_bias: 2069.95
+input: 0.207031
+0.416992
+output: 4715.76
+expected: 0.312012
+d_weight: -1952.49 -3932.61
+d_bias: -9430.89
+3.61209e+15
+m_weight:  3157.43 -124.636
+m_bias: -7360.94
+input: 0.173828
+0.200195
+output: -6837.04
+expected: 0.187012
+d_weight: 2377.01 2737.56
+d_bias: 13674.5
+1.86708e+15
+m_weight: 5534.43 2612.93
+m_bias: 6313.52
+input: 0.193359
+0.651367
+output: 9085.63
+expected: 0.422363
+d_weight: -3513.42 -11835.6
+d_bias: -18170.4
+1.23671e+16
+m_weight:  2021.01 -9222.68
+m_bias: -11856.9
+input:  0.675781
+0.0820312
+output: -11247.7
+expected: 0.378906
+d_weight: 15202.4 1845.38
+d_bias: 22496.1
+4.51127e+16
+m_weight: 17223.5 -7377.3
+m_bias: 10639.2
+input:  0.516602
+0.0136719
+output: 19436
+expected: 0.265137
+d_weight: -20081.1 -531.447
+d_bias: -38871.5
+5.30468e+17
+m_weight: -2857.62 -7908.75
+m_bias: -28232.3
+input: 0.376953
+0.113281
+output: -30205.4
+expected: 0.245117
+d_weight: 22772.2 6843.47
+d_bias: 60411.3
+2.58073e+17
+m_weight:  19914.6 -1065.28
+m_bias: 32179
+input: 0.563477
+0.282227
+output: 43099.8
+expected: 0.422852
+d_weight: -48570.9 -24327.6
+d_bias: -86198.7
+2.95519e+18
+m_weight: -28656.3 -25392.8
+m_bias: -54019.7
+input:  0.30957
+0.464844
+output: -74694.5
+expected: 0.387207
+d_weight: 46246.7 69442.9
+d_bias: 149390
+3.27168e+19
+m_weight: 17590.3 44050.1
+m_bias: 95370.1
+input: 0.131836
+0.609375
+output: 124532
+expected: 0.370605
+d_weight: -32835.5  -151773
+d_bias: -249064
+1.39563e+20
+m_weight: -15245.2  -107723
+m_bias: -153694
+input:  0.477539
+0.0605469
+output: -167496
+expected: 0.269043
+d_weight:  159972 20282.8
+d_bias: 334993
+1.32831e+21
+m_weight:   144727 -87440.3
+m_bias: 181299
+input: 0.157227
+0.563477
+output: 154783
+expected: 0.360352
+d_weight:  -48672 -174433
+d_bias: -309566
+2.73997e+21
+m_weight: 96054.8 -261874
+m_bias: -128267
+input: 0.219727
+0.496094
+output: -237075
+expected: 0.35791
+d_weight: 104184 235223
+d_bias: 474151
+1.74919e+22
+m_weight:   200238 -26650.3
+m_bias: 345884
+input: 0.850586
+0.560547
+output: 501265
+expected: 0.705566
+d_weight: -852736 -561964
+d_bias: -1.00253e+06
+4.10122e+22
+m_weight: -652498 -588614
+m_bias: -656644
+input: 0.750977
+0.623047
+output: -1.51339e+06
+expected: 0.687012
+d_weight: 2.27304e+06 1.88583e+06
+d_bias: 3.02678e+06
+7.07462e+24
+m_weight: 1.62054e+06 1.29721e+06
+m_bias: 2.37014e+06
+input: 0.647461
+0.478516
+output: 4.04011e+06
+expected: 0.562988
+d_weight: -5.23163e+06 -3.86651e+06
+d_bias: -8.08022e+06
+2.81329e+26
+m_weight: -3.61108e+06  -2.5693e+06
+m_bias: -5.71008e+06
+input: 0.714844
+0.854492
+output: -1.04869e+07
+expected: 0.784668
+d_weight:  1.4993e+07 1.79219e+07
+d_bias: 2.09738e+07
+8.64017e+27
+m_weight: 1.13819e+07 1.53526e+07
+m_bias: 1.52637e+07
+input: 0.896484
+0.889648
+output: 3.91258e+07
+expected: 0.893066
+d_weight: -7.01514e+07 -6.96165e+07
+d_bias: -7.82517e+07
+2.23655e+30
+m_weight: -5.87695e+07 -5.42638e+07
+m_bias: -6.2988e+07
+input: 0.0546875
+0.0898438
+output: -7.10772e+07
+expected: 0.0722656
+d_weight: 7.77407e+06 1.27717e+07
+d_bias: 1.42154e+08
+1.29298e+32
+m_weight: -5.09954e+07 -4.14922e+07
+m_bias: 7.91664e+07
+input: 0.541016
+0.730469
+output: 2.12684e+07
+expected: 0.635742
+d_weight:  -2.3013e+07 -3.10718e+07
+d_bias: -4.25368e+07
+7.82036e+30
+m_weight: -7.40085e+07 -7.25639e+07
+m_bias: 3.66297e+07
+input:  0.171875
+0.0576172
+output: 1.97285e+07
+expected: 0.114746
+d_weight: -6.78169e+06 -2.27341e+06
+d_bias: -3.94571e+07
+1.6725e+31
+m_weight: -8.07902e+07 -7.48373e+07
+m_bias: -2.8274e+06
+input: 0.745117
+0.548828
+output: -1.04098e+08
+expected: 0.646973
+d_weight: 1.55131e+08 1.14264e+08
+d_bias: 2.08197e+08
+5.25685e+32
+m_weight: 7.43408e+07 3.94269e+07
+m_bias: 2.05369e+08
+input: 0.170898
+0.308594
+output: 2.30241e+08
+expected: 0.239746
+d_weight: -7.86956e+07 -1.42102e+08
+d_bias: -4.60482e+08
+1.50149e+33
+m_weight: -4.35482e+06 -1.02675e+08
+m_bias: -2.55113e+08
+input: 0.832031
+0.480469
+output: -3.08068e+08
+expected: 0.65625
+d_weight: 5.12645e+08 2.96034e+08
+d_bias: 6.16136e+08
+4.00925e+33
+m_weight:  5.0829e+08 1.93359e+08
+m_bias: 3.61024e+08
+input: 0.773438
+0.963867
+output: 9.40527e+08
+expected: 0.868652
+d_weight: -1.45488e+09 -1.81309e+09
+d_bias: -1.88105e+09
+1.04646e+36
+m_weight: -9.46587e+08 -1.61973e+09
+m_bias: -1.52003e+09
+input: 0.0898438
+ 0.251953
+output: -2.01317e+09
+expected: 0.170898
+d_weight: 3.61741e+08 1.01445e+09
+d_bias: 4.02634e+09
+5.70567e+37
+m_weight: -5.84846e+08 -6.05277e+08
+m_bias: 2.50631e+09
+input: 0.0253906
+ 0.248047
+output: 2.34132e+09
+expected: 0.136719
+d_weight: -1.18895e+08 -1.16152e+09
+d_bias: -4.68264e+09
+1.55333e+37
+m_weight: -7.03741e+08 -1.76679e+09
+m_bias: -2.17634e+09
+input:  0.81543
+0.245117
+output: -3.18326e+09
+expected: 0.530273
+d_weight: 5.19145e+09 1.56054e+09
+d_bias: 6.36652e+09
+1.46598e+38
+m_weight: 4.48771e+09 -2.0625e+08
+m_bias: 4.19018e+09
+input: 0.744141
+0.666016
+output: 7.3923e+09
+expected: 0.705078
+d_weight: -1.10018e+10 -9.84677e+09
+d_bias: -1.47846e+10
+inf
+m_weight: -6.51411e+09  -1.0053e+10
+m_bias: -1.05944e+10
+input: 0.806641
+0.495117
+output: -2.08264e+10
+expected: 0.650879
+d_weight: 3.35988e+10  2.0623e+10
+d_bias: 4.16528e+10
+inf
+m_weight: 2.70847e+10   1.057e+10
+m_bias: 3.10584e+10
+input: 0.290039
+0.454102
+output: 4.37138e+10
+expected: 0.37207
+d_weight: -2.53574e+10  -3.9701e+10
+d_bias: -8.74277e+10
+inf
+m_weight:  1.72727e+09 -2.91311e+10
+m_bias: -5.63693e+10
+input:   0.974609
+0.00488281
+output: -5.48281e+10
+expected: 0.489746
+d_weight: 1.06872e+11 5.35431e+08
+d_bias: 1.09656e+11
+inf
+m_weight:  1.08599e+11 -2.85956e+10
+m_bias: 5.3287e+10
+input: 0.308594
+0.871094
+output: 6.18905e+10
+expected: 0.589844
+d_weight: -3.81981e+10 -1.07825e+11
+d_bias: -1.23781e+11
+inf
+m_weight:  7.04012e+10 -1.36421e+11
+m_bias: -7.04941e+10
+input: 0.894531
+0.364258
+output: -5.72103e+10
+expected: 0.629395
+d_weight: 1.02353e+11 4.16786e+10
+d_bias: 1.14421e+11
+inf
+m_weight: 1.72754e+11 -9.4742e+10
+m_bias: 4.39265e+10
+input: 0.960938
+0.435547
+output: 1.68668e+11
+expected: 0.698242
+d_weight: -3.24158e+11 -1.46925e+11
+d_bias: -3.37335e+11
+inf
+m_weight: -1.51404e+11 -2.41667e+11
+m_bias: -2.93409e+11
+input: 0.0947266
+ 0.133789
+output: -3.40083e+11
+expected: 0.114258
+d_weight: 6.44299e+10 9.09989e+10
+d_bias: 6.80167e+11
+inf
+m_weight: -8.69744e+10 -1.50668e+11
+m_bias: 3.86758e+11
+input: 0.493164
+0.839844
+output: 2.17327e+11
+expected: 0.666504
+d_weight: -2.14356e+11 -3.65042e+11
+d_bias: -4.34655e+11
+inf
+m_weight: -3.0133e+11 -5.1571e+11
+m_bias: -4.78967e+10
+input: 0.682617
+0.664062
+output: -5.96054e+11
+expected: 0.67334
+d_weight: 8.13753e+11 7.91634e+11
+d_bias: 1.19211e+12
+inf
+m_weight: 5.12423e+11 2.75924e+11
+m_bias: 1.14421e+12
+input: 0.149414
+0.514648
+output: 1.36278e+12
+expected: 0.332031
+d_weight: -4.07236e+11  -1.4027e+12
+d_bias: -2.72556e+12
+inf
+m_weight:  1.05186e+11 -1.12678e+12
+m_bias: -1.58135e+12
+input: 0.145508
+0.922852
+output: -2.60589e+12
+expected: 0.53418
+d_weight: 7.58355e+11  4.8097e+12
+d_bias: 5.21178e+12
+inf
+m_weight: 8.63541e+11 3.68292e+12
+m_bias: 3.63043e+12
+input: 0.479492
+0.235352
+output: 4.91128e+12
+expected: 0.357422
+d_weight: -4.70984e+12 -2.31175e+12
+d_bias: -9.82255e+12
+inf
+m_weight: -3.8463e+12 1.37117e+12
+m_bias: -6.19212e+12
+input: 0.174805
+0.504883
+output: -6.17219e+12
+expected: 0.339844
+d_weight: 2.15786e+12 6.23247e+12
+d_bias: 1.23444e+13
+inf
+m_weight: -1.68844e+12  7.60363e+12
+m_bias: 6.15226e+12
+input: 0.483398
+0.991211
+output: 1.28729e+13
+expected: 0.737305
+d_weight: -1.24455e+13 -2.55195e+13
+d_bias: -2.57458e+13
+inf
+m_weight: -1.41339e+13 -1.79158e+13
+m_bias: -1.95935e+13
+input:     0.75
+0.227539
+output: -3.42705e+13
+expected: 0.48877
+d_weight: 5.14057e+13 1.55957e+13
+d_bias: 6.8541e+13
+inf
+m_weight: 3.72718e+13 -2.3201e+12
+m_bias: 4.89475e+13
+input: 0.657227
+0.556641
+output: 7.2152e+13
+expected: 0.606934
+d_weight: -9.48404e+13 -8.03255e+13
+d_bias: -1.44304e+14
+inf
+m_weight: -5.75686e+13 -8.26456e+13
+m_bias: -9.53566e+13
+input: 0.723633
+0.947266
+output: -2.15302e+14
+expected: 0.835449
+d_weight:   3.116e+14 4.07897e+14
+d_bias: 4.30605e+14
+inf
+m_weight: 2.54031e+14 3.25252e+14
+m_bias: 3.35248e+14
+input: 0.0107422
+ 0.698242
+output: 5.65082e+14
+expected: 0.354492
+d_weight: -1.21404e+13 -7.89128e+14
+d_bias: -1.13016e+15
+inf
+m_weight:  2.41891e+14 -4.63876e+14
+m_bias: -7.94915e+14
+input: 0.953125
+0.320312
+output: -7.12948e+14
+expected: 0.636719
+d_weight: 1.35906e+15 4.56732e+14
+d_bias: 1.4259e+15
+inf
+m_weight:  1.60095e+15 -7.14374e+12
+m_bias: 6.30981e+14
+input: 0.569336
+0.847656
+output: 1.5364e+15
+expected: 0.708496
+d_weight: -1.74946e+15 -2.60468e+15
+d_bias: -3.07281e+15
+inf
+m_weight: -1.48511e+14 -2.61183e+15
+m_bias: -2.44182e+15
+input:  0.68457
+0.530273
+output: -3.92847e+15
+expected: 0.607422
+d_weight: 5.37863e+15 4.16633e+15
+d_bias: 7.85694e+15
+inf
+m_weight: 5.23012e+15  1.5545e+15
+m_bias: 5.41512e+15
+input:  0.28418
+0.779297
+output: 8.11283e+15
+expected: 0.531738
+d_weight:   -4.611e+15 -1.26446e+16
+d_bias: -1.62257e+16
+inf
+m_weight:  6.19115e+14 -1.10901e+16
+m_bias: -1.08105e+16
+input: 0.664062
+0.777344
+output: -1.90202e+16
+expected: 0.720703
+d_weight: 2.52613e+16 2.95705e+16
+d_bias: 3.80405e+16
+inf
+m_weight: 2.58804e+16 1.84804e+16
+m_bias: 2.72299e+16
+input: 0.620117
+0.347656
+output: 4.97036e+16
+expected: 0.483887
+d_weight: -6.16442e+16 -3.45596e+16
+d_bias: -9.94073e+16
+inf
+m_weight: -3.57638e+16 -1.60791e+16
+m_bias: -7.21773e+16
+input: 0.442383
+0.769531
+output: -1.00372e+17
+expected: 0.605957
+d_weight: 8.88057e+16 1.54479e+17
+d_bias: 2.00744e+17
+inf
+m_weight: 5.30419e+16   1.384e+17
+m_bias: 1.28567e+17
+input: 0.862305
+0.587891
+output: 2.55669e+17
+expected: 0.725098
+d_weight: -4.40929e+17 -3.00611e+17
+d_bias: -5.11338e+17
+inf
+m_weight: -3.87887e+17 -1.62211e+17
+m_bias: -3.82771e+17
+input: 0.692383
+0.341797
+output: -7.06781e+17
+expected: 0.51709
+d_weight: 9.78725e+17 4.83151e+17
+d_bias: 1.41356e+18
+inf
+m_weight: 5.90838e+17  3.2094e+17
+m_bias: 1.03079e+18
+input: 0.823242
+0.868164
+output: 1.79582e+18
+expected: 0.845703
+d_weight: -2.95679e+18 -3.11814e+18
+d_bias: -3.59164e+18
+inf
+m_weight: -2.36595e+18  -2.7972e+18
+m_bias: -2.56085e+18
+input:  0.84668
+0.307617
+output: -5.42452e+18
+expected: 0.577148
+d_weight: 9.18567e+18 3.33735e+18
+d_bias: 1.0849e+19
+inf
+m_weight: 6.81971e+18 5.40158e+17
+m_bias: 8.2882e+18
+input: 0.859375
+0.597656
+output: 1.44717e+19
+expected: 0.728516
+d_weight: -2.48733e+19 -1.72982e+19
+d_bias: -2.89434e+19
+inf
+m_weight: -1.80535e+19 -1.67581e+19
+m_bias: -2.06552e+19
+input: 0.535156
+0.516602
+output: -3.89739e+19
+expected: 0.525879
+d_weight: 4.17143e+19  4.0268e+19
+d_bias: 7.79479e+19
+inf
+m_weight: 2.36608e+19 2.35099e+19
+m_bias: 5.72927e+19
+input: 0.154297
+0.258789
+output: 6.70276e+19
+expected: 0.206543
+d_weight: -2.06843e+19  -3.4692e+19
+d_bias: -1.34055e+20
+inf
+m_weight:  2.97647e+18 -1.11821e+19
+m_bias: -7.67624e+19
+input: 0.464844
+0.166016
+output: -7.72352e+19
+expected: 0.31543
+d_weight: 7.18046e+19 2.56445e+19
+d_bias: 1.5447e+20
+inf
+m_weight: 7.47811e+19 1.44625e+19
+m_bias: 7.7708e+19
+input: 0.957031
+0.417969
+output: 1.55321e+20
+expected: 0.6875
+d_weight: -2.97294e+20 -1.29838e+20
+d_bias: -3.10642e+20
+inf
+m_weight: -2.22513e+20 -1.15376e+20
+m_bias: -2.32934e+20
+input: 0.486328
+0.526367
+output: -4.01878e+20
+expected: 0.506348
+d_weight: 3.90889e+20 4.23071e+20
+d_bias: 8.03756e+20
+inf
+m_weight: 1.68376e+20 3.07695e+20
+m_bias: 5.70822e+20
+input: 0.265625
+0.170898
+output: 6.68132e+20
+expected: 0.218262
+d_weight: -3.54945e+20 -2.28365e+20
+d_bias: -1.33626e+21
+inf
+m_weight: -1.86569e+20  7.93293e+19
+m_bias: -7.65441e+20
+input: 0.0576172
+ 0.549805
+output: -7.32575e+20
+expected: 0.303711
+d_weight: 8.44178e+19 8.05546e+20
+d_bias: 1.46515e+21
+inf
+m_weight: -1.02151e+20  8.84876e+20
+m_bias: 6.99709e+20
+input: 0.950195
+ 0.72168
+output: 1.24124e+21
+expected: 0.835938
+d_weight: -2.35885e+21 -1.79156e+21
+d_bias: -2.48248e+21
+inf
+m_weight:   -2.461e+21 -9.06683e+20
+m_bias: -1.78278e+21
+input: 0.328125
+0.570312
+output: -3.10738e+21
+expected: 0.449219
+d_weight: 2.03922e+21 3.54436e+21
+d_bias: 6.21477e+21
+inf
+m_weight: -4.21776e+20  2.63768e+21
+m_bias: 4.43199e+21
+input: 0.0693359
+ 0.770508
+output: 6.4351e+21
+expected: 0.419922
+d_weight: -8.92367e+20 -9.91658e+21
+d_bias: -1.28702e+22
+inf
+m_weight: -1.31414e+21 -7.27891e+21
+m_bias: -8.4382e+21
+input: 0.339844
+0.932617
+output: -1.56732e+22
+expected: 0.63623
+d_weight: 1.06529e+22 2.92343e+22
+d_bias: 3.13465e+22
+inf
+m_weight: 9.33876e+21 2.19554e+22
+m_bias: 2.29083e+22
+input:  0.358398
+0.0332031
+output: 2.69843e+22
+expected: 0.195801
+d_weight: -1.93422e+22 -1.79192e+21
+d_bias: -5.39685e+22
+inf
+m_weight: -1.00035e+22  2.01634e+22
+m_bias: -3.10603e+22
+input: 0.274414
+0.181641
+output: -3.01428e+22
+expected: 0.228027
+d_weight: 1.65432e+22 1.09503e+22
+d_bias: 6.02857e+22
+inf
+m_weight: 6.53977e+21 3.11138e+22
+m_bias: 2.92254e+22
+input: 0.901367
+ 0.12207
+output: 3.89182e+22
+expected: 0.511719
+d_weight: -7.01592e+22 -9.50152e+21
+d_bias: -7.78365e+22
+inf
+m_weight: -6.36195e+22  2.16122e+22
+m_bias: -4.8611e+22
+input: 0.489258
+0.760742
+output: -6.3296e+22
+expected: 0.625
+d_weight: 6.19361e+22 9.63039e+22
+d_bias: 1.26592e+23
+inf
+m_weight: -1.68333e+21  1.17916e+23
+m_bias: 7.7981e+22
+input:  0.719727
+0.0253906
+output: 7.97634e+22
+expected: 0.372559
+d_weight: -1.14816e+23 -4.05049e+21
+d_bias: -1.59527e+23
+inf
+m_weight: -1.16499e+23  1.13866e+23
+m_bias: -8.15458e+22
+input: 0.277344
+0.874023
+output: -1.43349e+22
+expected: 0.575684
+d_weight: 7.95137e+21  2.5058e+22
+d_bias: 2.86697e+22
+inf
+m_weight: -1.08548e+23  1.38924e+23
+m_bias: -5.28761e+22
+input:  0.28418
+0.742188
+output: 1.93843e+22
+expected: 0.513184
+d_weight: -1.10172e+22 -2.87735e+22
+d_bias: -3.87685e+22
+inf
+m_weight: -1.19565e+23   1.1015e+23
+m_bias: -9.16446e+22
+input: 0.0400391
+ 0.242188
+output: -6.97549e+22
+expected: 0.141113
+d_weight: 5.58584e+21 3.37875e+22
+d_bias: 1.3951e+23
+inf
+m_weight: -1.13979e+23  1.43938e+23
+m_bias: 4.78652e+22
+input: 0.160156
+0.526367
+output: 1.05375e+23
+expected: 0.343262
+d_weight: -3.37529e+22 -1.10932e+23
+d_bias: -2.1075e+23
+inf
+m_weight: -1.47732e+23   3.3006e+22
+m_bias: -1.62884e+23
+input: 0.768555
+0.426758
+output: -2.62339e+23
+expected: 0.597656
+d_weight: 4.03244e+23  2.2391e+23
+d_bias: 5.24678e+23
+inf
+m_weight: 2.55512e+23 2.56916e+23
+m_bias: 3.61793e+23
+input: 0.697266
+0.826172
+output: 7.5221e+23
+expected: 0.761719
+d_weight: -1.04898e+24 -1.24291e+24
+d_bias: -1.50442e+24
+inf
+m_weight: -7.93469e+23 -9.85993e+23
+m_bias: -1.14263e+24
+input: 0.976562
+0.648438
+output: -2.55685e+24
+expected: 0.8125
+d_weight: 4.99385e+24 3.31592e+24
+d_bias: 5.11371e+24
+inf
+m_weight: 4.20039e+24 2.32993e+24
+m_bias: 3.97108e+24
+input: 0.548828
+0.304688
+output: 6.98627e+24
+expected: 0.426758
+d_weight: -7.66852e+24 -4.25726e+24
+d_bias: -1.39725e+25
+inf
+m_weight: -3.46814e+24 -1.92733e+24
+m_bias: -1.00015e+25
+input:  0.21875
+0.618164
+output: -1.19515e+25
+expected: 0.418457
+d_weight: 5.22879e+24  1.4776e+25
+d_bias: 2.3903e+25
+inf
+m_weight: 1.76065e+24 1.28487e+25
+m_bias: 1.39016e+25
+input: 0.0751953
+  0.55957
+output: 2.12237e+25
+expected: 0.317383
+d_weight: -3.19185e+24 -2.37523e+25
+d_bias: -4.24474e+25
+inf
+m_weight: -1.43119e+24 -1.09036e+25
+m_bias: -2.85458e+25
+input: 0.550781
+0.433594
+output: -3.40619e+25
+expected: 0.492188
+d_weight: 3.75213e+25  2.9538e+25
+d_bias: 6.81237e+25
+inf
+m_weight: 3.60901e+25 1.86344e+25
+m_bias: 3.95779e+25
+input: 0.592773
+0.826172
+output: 7.63663e+25
+expected: 0.709473
+d_weight: -9.05359e+25 -1.26183e+26
+d_bias: -1.52733e+26
+inf
+m_weight: -5.44458e+25 -1.07549e+26
+m_bias: -1.13155e+26
+input: 0.616211
+0.494141
+output: -1.99849e+26
+expected: 0.555176
+d_weight: 2.46299e+26 1.97507e+26
+d_bias: 3.99698e+26
+inf
+m_weight: 1.91853e+26 8.99582e+25
+m_bias: 2.86544e+26
+input: 0.948242
+0.105469
+output: 4.77954e+26
+expected: 0.526855
+d_weight: -9.06433e+26 -1.00818e+26
+d_bias: -9.55909e+26
+inf
+m_weight:  -7.1458e+26 -1.08603e+25
+m_bias: -6.69365e+26
+input: 0.254883
+0.667969
+output: -8.58753e+26
+expected: 0.461426
+d_weight: 4.37763e+26 1.14724e+27
+d_bias: 1.71751e+27
+inf
+m_weight: -2.76817e+26  1.13638e+27
+m_bias: 1.04814e+27
+input: 0.130859
+0.532227
+output: 1.61673e+27
+expected: 0.331543
+d_weight: -4.23129e+26 -1.72093e+27
+d_bias: -3.23346e+27
+inf
+m_weight: -6.99946e+26 -5.84553e+26
+m_bias: -2.18532e+27
+input: 0.541992
+0.416016
+output: -2.80787e+27
+expected: 0.479004
+d_weight: 3.04368e+27 2.33623e+27
+d_bias: 5.61573e+27
+inf
+m_weight: 2.34374e+27 1.75168e+27
+m_bias: 3.43041e+27
+input: 0.275391
+0.583008
+output: 5.0971e+27
+expected: 0.429199
+d_weight: -2.80739e+27  -5.9433e+27
+d_bias: -1.01942e+28
+inf
+m_weight:  -4.6365e+26 -4.19162e+27
+m_bias: -6.76379e+27
+input: 0.658203
+0.435547
+output: -8.89461e+27
+expected: 0.546875
+d_weight: 1.17089e+28 7.74804e+27
+d_bias: 1.77892e+28
+inf
+m_weight: 1.12453e+28 3.55642e+27
+m_bias: 1.10254e+28
+input: 0.109375
+0.426758
+output: 1.37731e+28
+expected: 0.268066
+d_weight: -3.01287e+27 -1.17556e+28
+d_bias: -2.75462e+28
+inf
+m_weight:   8.2324e+27 -8.19915e+27
+m_bias: -1.65208e+28
+input: 0.862305
+0.807617
+output: -1.60437e+28
+expected: 0.834961
+d_weight: 2.76692e+28 2.59144e+28
+d_bias: 3.20875e+28
+inf
+m_weight: 3.59016e+28 1.77152e+28
+m_bias: 1.55667e+28
+input: 0.253906
+0.839844
+output: 3.95603e+28
+expected: 0.546875
+d_weight: -2.00892e+28  -6.6449e+28
+d_bias: -7.91206e+28
+inf
+m_weight:  1.58123e+28 -4.87337e+28
+m_bias: -6.3554e+28
+input: 0.456055
+0.802734
+output: -9.54629e+28
+expected: 0.629395
+d_weight: 8.70726e+28 1.53263e+29
+d_bias: 1.90926e+29
+inf
+m_weight: 1.02885e+29 1.04529e+29
+m_bias: 1.27372e+29
+input: 0.144531
+0.674805
+output: 2.12779e+29
+expected: 0.409668
+d_weight: -6.15063e+28 -2.87168e+29
+d_bias: -4.25557e+29
+inf
+m_weight:  4.13786e+28 -1.82639e+29
+m_bias: -2.98185e+29
+input: 0.420898
+0.220703
+output: -3.21078e+29
+expected: 0.320801
+d_weight: 2.70283e+29 1.41726e+29
+d_bias: 6.42157e+29
+inf
+m_weight:  3.11661e+29 -4.09131e+28
+m_bias: 3.43971e+29
+input: 0.234375
+0.972656
+output: 3.77222e+29
+expected: 0.603516
+d_weight: -1.76823e+29 -7.33815e+29
+d_bias: -7.54445e+29
+inf
+m_weight:  1.34838e+29 -7.74728e+29
+m_bias: -4.10474e+29
+input: 0.654297
+0.827148
+output: -9.63065e+29
+expected: 0.740723
+d_weight: 1.26026e+30 1.59319e+30
+d_bias: 1.92613e+30
+inf
+m_weight:  1.3951e+30 8.18467e+29
+m_bias: 1.51566e+30
+input: 0.798828
+0.270508
+output: 2.8515e+30
+expected: 0.534668
+d_weight: -4.55572e+30 -1.54271e+30
+d_bias: -5.703e+30
+inf
+m_weight: -3.16062e+30 -7.24241e+29
+m_bias: -4.18735e+30
+input: 0.321289
+ 0.74707
+output: -5.74388e+30
+expected: 0.53418
+d_weight: 3.69089e+30 8.58216e+30
+d_bias: 1.14878e+31
+inf
+m_weight:  5.3027e+29 7.85792e+30
+m_bias: 7.30041e+30
+input: 0.376953
+0.576172
+output: 1.20278e+31
+expected: 0.476562
+d_weight: -9.06784e+30 -1.38602e+31
+d_bias: -2.40556e+31
+inf
+m_weight: -8.53757e+30 -6.00225e+30
+m_bias: -1.67552e+31
+input: 0.415039
+0.507812
+output: -2.33467e+31
+expected: 0.461426
+d_weight: 1.93795e+31 2.37114e+31
+d_bias: 4.66933e+31
+inf
+m_weight:  1.0842e+31 1.77092e+31
+m_bias: 2.99381e+31
+input: 0.109375
+0.957031
+output: 4.80722e+31
+expected: 0.533203
+d_weight: -1.05158e+31 -9.20132e+31
+d_bias: -9.61444e+31
+inf
+m_weight: 3.26184e+29 -7.4304e+31
+m_bias: -6.62063e+31
+input: 0.923828
+0.384766
+output: -9.44946e+31
+expected: 0.654297
+d_weight: 1.74593e+32 7.27165e+31
+d_bias: 1.88989e+32
+inf
+m_weight:   1.7492e+32 -1.58746e+30
+m_bias: 1.22783e+32
+input: 0.540039
+0.582031
+output: 2.16322e+32
+expected: 0.561035
+d_weight: -2.33645e+32 -2.51813e+32
+d_bias: -4.32645e+32
+inf
+m_weight: -5.87254e+31   -2.534e+32
+m_bias: -3.09862e+32
+input: 0.820312
+0.650391
+output: -5.22844e+32
+expected: 0.735352
+d_weight: 8.57791e+32 6.80106e+32
+d_bias: 1.04569e+33
+inf
+m_weight: 7.99066e+32 4.26706e+32
+m_bias: 7.35826e+32
+input: 0.00976562
+  0.683594
+output: 1.03532e+33
+expected: 0.34668
+d_weight: -2.02212e+31 -1.41548e+33
+d_bias: -2.07065e+33
+inf
+m_weight:  7.78845e+32 -9.88775e+32
+m_bias: -1.33482e+33
+input: 0.458008
+0.263672
+output: -1.23881e+33
+expected: 0.36084
+d_weight: 1.13477e+33 6.53281e+32
+d_bias: 2.47763e+33
+inf
+m_weight:  1.91362e+33 -3.35494e+32
+m_bias: 1.14281e+33
+input: 0.523438
+0.914062
+output: 1.83781e+33
+expected: 0.71875
+d_weight: -1.92395e+33 -3.35974e+33
+d_bias: -3.67562e+33
+inf
+m_weight: -1.03363e+31 -3.69524e+33
+m_bias: -2.5328e+33
+input: 0.0664062
+ 0.667969
+output: -5.00179e+33
+expected: 0.367188
+d_weight: 6.64301e+32 6.68208e+33
+d_bias: 1.00036e+34
+inf
+m_weight: 6.53964e+32 2.98685e+33
+m_bias: 7.47078e+33
+input: 0.588867
+0.487305
+output: 9.31139e+33
+expected: 0.538086
+d_weight: -1.09663e+34 -9.07496e+33
+d_bias: -1.86228e+34
+inf
+m_weight: -1.03124e+34 -6.08812e+33
+m_bias: -1.1152e+34
+input: 0.888672
+0.824219
+output: -2.53342e+34
+expected: 0.856445
+d_weight: 4.50277e+34 4.17619e+34
+d_bias: 5.06685e+34
+inf
+m_weight: 3.47153e+34 3.56738e+34
+m_bias: 3.95165e+34
+input: 0.459961
+0.543945
+output: 7.48888e+34
+expected: 0.501953
+d_weight: -6.88918e+34 -8.14708e+34
+d_bias: -1.49778e+35
+inf
+m_weight: -3.41765e+34  -4.5797e+34
+m_bias: -1.10261e+35
+input: 0.651367
+0.258789
+output: -1.44374e+35
+expected: 0.455078
+d_weight: 1.88081e+35  7.4725e+34
+d_bias: 2.88749e+35
+inf
+m_weight: 1.53905e+35  2.8928e+34
+m_bias: 1.78488e+35
+input: 0.814453
+0.973633
+output: 3.32001e+35
+expected: 0.894043
+d_weight: -5.40799e+35 -6.46494e+35
+d_bias: -6.64002e+35
+inf
+m_weight: -3.86894e+35 -6.17566e+35
+m_bias: -4.85515e+35
+input: 0.00585938
+  0.191406
+output: -6.05988e+35
+expected: 0.0986328
+d_weight: 7.10142e+33  2.3198e+35
+d_bias: 1.21198e+36
+inf
+m_weight: -3.79792e+35 -3.85587e+35
+m_bias: 7.26461e+35
+input: 0.549805
+0.420898
+output: 3.55356e+35
+expected: 0.485352
+d_weight: -3.90753e+35 -2.99138e+35
+d_bias: -7.10712e+35
+inf
+m_weight: -7.70545e+35 -6.84724e+35
+m_bias: 1.57483e+34
+input: 0.700195
+ 0.65918
+output: -9.7514e+35
+expected: 0.679688
+d_weight: 1.36558e+36 1.28559e+36
+d_bias: 1.95028e+36
+inf
+m_weight: 5.95032e+35 6.00861e+35
+m_bias: 1.96603e+36
+input: 0.378906
+0.624023
+output: 2.56644e+36
+expected: 0.501465
+d_weight: -1.94488e+36 -3.20304e+36
+d_bias: -5.13288e+36
+inf
+m_weight: -1.34985e+36 -2.60218e+36
+m_bias: -3.16685e+36
+input: 0.0439453
+ 0.918945
+output: -5.61743e+36
+expected: 0.481445
+d_weight:  4.9372e+35 1.03242e+37
+d_bias: 1.12349e+37
+inf
+m_weight: -8.5613e+35 7.72205e+36
+m_bias: 8.06801e+36
+input: 0.207031
+0.865234
+output: 1.45722e+37
+expected: 0.536133
+d_weight: -6.03378e+36 -2.52167e+37
+d_bias: -2.91443e+37
+inf
+m_weight: -6.88991e+36 -1.74946e+37
+m_bias: -2.10763e+37
+input: 0.569336
+0.216797
+output: -2.87917e+37
+expected: 0.393066
+d_weight: 3.27843e+37 1.24839e+37
+d_bias: 5.75835e+37
+inf
+m_weight:  2.58944e+37 -5.01068e+36
+m_bias: 3.65072e+37
+input:  0.548828
+0.0273438
+output: 5.05818e+37
+expected: 0.288086
+d_weight: -5.55214e+37 -2.76619e+36
+d_bias: -1.01164e+38
+inf
+m_weight:  -2.9627e+37 -7.77687e+36
+m_bias: -6.46563e+37
+input:  0.480469
+0.0722656
+output: -7.94532e+37
+expected: 0.276367
+d_weight: 7.63495e+37 1.14835e+37
+d_bias: 1.58906e+38
+inf
+m_weight: 4.67226e+37 3.70659e+36
+m_bias: 9.425e+37
+input: 0.941406
+0.546875
+output: 1.40262e+38
+expected: 0.744141
+d_weight: -2.64087e+38 -1.53412e+38
+d_bias: -inf
+inf
+m_weight: -2.17364e+38 -1.49705e+38
+m_bias: -inf
+input: 0.740234
+ 0.53125
+output: -inf
+expected: 0.635742
+d_weight: inf inf
+d_bias: inf
+inf
+m_weight: inf inf
+m_bias: -nan
+input: 0.0341797
+ 0.629883
+output: -nan
+expected: 0.332031
+d_weight: -nan -nan
+d_bias: -nan
+-nan
+5 + 4 = -nan

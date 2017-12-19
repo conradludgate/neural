@@ -1,9 +1,11 @@
 #include <iostream>
 
-//#include "int.hpp"
-#include "neural/net.hpp"
+#include "int.hpp"
 
 int main()
 {
-	neural::Net<28*28, 16, 16, 10> n;
+	AddTrainer add;
+	add.train(0.5);
+
+	std::cout << "5 + 4 = " << add.process({5.0, 4.0})[0] << std::endl;
 }
