@@ -5,87 +5,31 @@
 #include <cstdlib>
 
 #include "neural/train.hpp"
-#include "neural/net.hpp"
 
-class IntIter : public std::iterator<std::input_iterator_tag, int>
-{
-public:
-	IntIter(int* v) : p(v) {}
-	IntIter() : end(true) {}
-
-	IntIter operator ++()
-	{
-		end = true;
-
-		return *this;
-	}
-
-	bool operator !=(const IntIter& rhs) const {return end!=rhs.end;}
-
-	int& operator *() {return *p;}
-
-private:
-	int* p;
-	bool end = false;
-};
-
-class Int 
-{
-public:
-	Int(int value = 0) : m_value(value) {}
-
-	int getValue() 
-	{
-		return m_value;
-	}
-
-	void setValue(int value)
-	{
-		m_value = value;
-	}
-
-	Int operator =(std::vector<float> value)
-	{
-		m_value = value[0];
-	}
-
-	operator float()
-	{
-		return m_value;
-	}
-
-	IntIter begin() { return IntIter(&m_value); }
-	IntIter end() { return IntIter(); }
-private:
-	int m_value;
-};
-
-class AddTrainer: public neural::Trainer
+class AddTrainer: public neural::Trainer<2, 1>
 {
 public:
 	AddTrainer()
 	{
-		setSize({2, 1});
+		this->Random();
 	}
 
-	float costf(std::vector<float> output, std::vector<float> expected)
+	neural::TestData<2, 1> dataf()
 	{
-		return output[0] - expected[0];
+		neural::TestData<2, 1> td;
+
+		float a = rand() % 1024;
+		float b = rand() % 1024;
+
+		td.input = {a, b};
+		td.expected.setConstant(a + b);
+
+		return td;
 	}
 
-	std::vector<neural::TestData> data_set()
+	virtual float costf(vec<1> output, vec<1> expected)
 	{
-		std::vector<neural::TestData> test_data(10000);
-
-		for (auto i = test_data.begin(); i != test_data.end(); ++i)
-		{
-			float a = rand() % 1024;
-			float b = rand() % 1024;
-
-			(*i).input = {a, b};
-			(*i).expected = {a + b};
-		}
-
-		return test_data;
+		auto diff = expected - output;
+		return diff.coeff(0);
 	}
 };
