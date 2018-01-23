@@ -22,14 +22,8 @@ public:
 		float b = rand() % 1024;
 
 		td.input = {a, b};
-		td.expected.setConstant(a + b);
+		td.expected.setConstant((a + b));
 
 		return td;
-	}
-
-	virtual float costf(vec<1> output, vec<1> expected)
-	{
-		auto diff = expected - output;
-		return diff.coeff(0);
 	}
 };

@@ -5,7 +5,10 @@
 int main()
 {
 	AddTrainer add;
-	add.train(0.5);
+	add.train(1e-12);
 
-	std::cout << "5 + 4 = " << add.process({5.0, 4.0})[0] << std::endl;
+	auto data = add.dataf();
+	int output = add.process(data.input)[0];
+
+	std::cout << data.input[0] << " + " << data.input[1] << " = " << output << std::endl;
 }

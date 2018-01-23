@@ -46,8 +46,8 @@ protected:
 	{
 		if constexpr(sizeof...(Is) == 0)
 	    {
-	        //return relu<B>(std::get<n>(m_weights) * input + std::get<n>(m_biases));
-	        return std::get<n>(m_weights) * input + std::get<n>(m_biases);
+	        return relu<B>(std::get<n>(m_weights) * input + std::get<n>(m_biases));
+	        //return std::get<n>(m_weights) * input + std::get<n>(m_biases);
 	    }
 	    else
 	    {
