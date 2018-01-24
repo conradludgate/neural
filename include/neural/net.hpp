@@ -37,13 +37,14 @@ protected:
 	template<ui n, ui A, ui B, ui... Is>
 	vec<get_last<B, Is...>()> process(vec<A> input)
 	{
-		auto output = relu<B>(std::get<n>(m_weights) * input + std::get<n>(m_biases));		
-		if constexpr(sizeof...(Is) != 0)
+		if constexpr(sizeof...(Is) == 0)
 	    {
-			return process<n+1, B, Is...>(output);
+	        return relu<B>(std::get<n>(m_weights) * input + std::get<n>(m_biases));
+	    }
+	    else
+	    {
+			return process<n+1, B, Is...>(process<n, A, B>(input));
 		}
-
-		return output;
 	}
 
 private:
