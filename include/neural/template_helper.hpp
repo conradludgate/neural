@@ -56,3 +56,13 @@ auto make_biases()
 		return std::tuple_cat(make_biases<B>(), make_biases<Is...>());
 	}
 }
+
+template<ui B>
+vec<B> relu(vec<B> v)
+{
+    for (int i = 0; i < B; ++i)
+        if (v[i] < 0)
+            v[i] = 0;
+
+    return v;
+}
