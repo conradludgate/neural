@@ -8,7 +8,7 @@
 
 namespace neural
 {
-
+	
 template<ui A, ui B>
 struct TestData
 {
@@ -29,10 +29,11 @@ public:
 
 		while (cost >= tol)
 		{
+			// Get test data
 			auto td = dataf();
-			back_prop<0, First, Second, Further...>(td.input, td.expected, p, cost);
 
-			//std::cout << "\rCost: " << cost;
+			// Perform back propagation
+			back_prop<0, First, Second, Further...>(td.input, td.expected, p, cost);
 		}
 	}
 
@@ -57,7 +58,6 @@ private:
 		}
 		
 		auto scale = relu<B>(2 * (e - output));
-		//auto scale = 2 * (e - output);
 		auto d_input = p * std::get<n>(this->m_weights).transpose() * scale; // AxB * Bx1 = Ax1
 		std::get<n>(this->m_weights) += p * scale * input.transpose(); // BxA = Bx1 * 1xA
 		std::get<n>(this->m_biases) += p * scale; // 

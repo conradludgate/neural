@@ -2,6 +2,9 @@
 
 #include <neural/template_helper.hpp>
 
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+
 namespace neural
 {
 
@@ -34,22 +37,19 @@ protected:
 	template<ui n, ui A, ui B, ui... Is>
 	vec<get_last<B, Is...>()> process(vec<A> input)
 	{
-		if constexpr(sizeof...(Is) == 0)
+		auto output = relu<B>(std::get<n>(m_weights) * input + std::get<n>(m_biases));		
+		if constexpr(sizeof...(Is) != 0)
 	    {
-	        return relu<B>(std::get<n>(m_weights) * input + std::get<n>(m_biases));
-	        //return std::get<n>(m_weights) * input + std::get<n>(m_biases);
-	    }
-	    else
-	    {
-			return process<n+1, B, Is...>(process<n, A, B>(input));
+			return process<n+1, B, Is...>(output);
 		}
+
+		return output;
 	}
 
 private:
 	template<ui n>
 	void random()
 	{
-		//std::get<n>(m_weights) = Eigen::Matrix<float, B, A>::Random();
 		std::get<n>(m_weights).setRandom();
 		std::get<n>(m_biases).setRandom();
 
@@ -62,7 +62,6 @@ private:
 	template<ui n>
 	void zero()
 	{
-		//std::get<n>(m_weights) = Eigen::Matrix<float, B, A>::Zero();
 		std::get<n>(m_weights).setZero();
 		std::get<n>(m_biases).setZero();
 
@@ -71,6 +70,32 @@ private:
 			zero<n+1>();
 		}
 	}
+
+	// For serialization of the network
+	friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        _serialize<Archive, 0>(ar, version);
+    }
+
+    template<class Archive, ui n>
+    void _serialize(Archive & ar, const unsigned int version)
+    {
+        auto w = std::get<n>(m_weights);
+        for (int j = 0; j < w.cols(); ++j)
+        	for (int i = 0; i < w.rows(); ++i)
+        		ar & w(i, j);
+
+		auto b = std::get<n>(m_biases);
+		for (int i = 0; i < b.rows(); ++i)
+			ar & b[i];
+
+		if constexpr(sizeof...(Further) != n)
+		{
+			_serialize<Archive, n+1>(ar, version);
+		}
+    }
 };
 
 }
