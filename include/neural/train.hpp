@@ -8,7 +8,7 @@
 
 namespace neural
 {
-	
+
 template<ui A, ui B>
 struct TestData
 {
@@ -25,6 +25,9 @@ static const ui last = get_last<Second, Further...>();
 public:
 	void train(float tol, float p)
 	{
+		assert(tol > 0);
+		assert(p > 0);
+
 		float cost = tol;
 
 		while (cost >= tol)
