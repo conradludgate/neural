@@ -19,7 +19,7 @@ shift $((OPTIND-1))
 
 start=`date +%s`
 
-g++ -I include -I /usr/include/eigen3 src/*.cpp -o .build/neural -std=c++1z
+g++ -I include -I /usr/include/eigen3 src/*.cpp -o .build/neural -std=c++1z -lboost_serialization
 error=$?
 
 end=`date +%s`
