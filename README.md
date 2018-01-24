@@ -59,11 +59,11 @@ func main()
 	// Save the network to file
 	std::ofstream ofs("network-data");
 	boost::archive::binary_oarchive oa(ofs);
-    oa << network;
+	oa << network;
 }
 ```
 
-Then to use it in a normal use environment
+Then to use it in a normal environment
 
 ```c++
 func main()
