@@ -31,18 +31,8 @@ protected:
 	decltype(make_weights<First, Second, Further...>()) m_weights;
 	decltype(make_biases<Second, Further...>()) m_biases;
 
-	template<ui B>
-	vec<B> relu(vec<B> v)
-	{
-		for (int i = 0; i < B; ++i)
-			if (v[i] < 0)
-				v[i] = 0;
-
-		return v;
-	}
-
 	template<ui n, ui A, ui B, ui... Is>
-	vec<B> process(vec<A> input)
+	vec<get_last<B, Is...>()> process(vec<A> input)
 	{
 		if constexpr(sizeof...(Is) == 0)
 	    {
@@ -51,7 +41,7 @@ protected:
 	    }
 	    else
 	    {
-			return process<n+1, B, Is...>(process<n, A, B>());
+			return process<n+1, B, Is...>(process<n, A, B>(input));
 		}
 	}
 
