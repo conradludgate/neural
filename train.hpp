@@ -37,6 +37,8 @@ public:
 
 			// Perform back propagation
 			back_prop<0, First, Second, Further...>(td.input, td.expected, p, cost);
+
+			std::cout << cost << std::endl;
 		}
 	}
 
@@ -60,10 +62,10 @@ private:
 			cost = diff.dot(diff);
 		}
 		
-		auto scale = relu<B>(2 * (e - output));
-		auto d_input = p * std::get<n>(this->m_weights).transpose() * scale; // AxB * Bx1 = Ax1
-		std::get<n>(this->m_weights) += p * scale * input.transpose(); // BxA = Bx1 * 1xA
-		std::get<n>(this->m_biases) += p * scale; // 
+		auto scale = p * 2 * (e - output);
+		auto d_input = std::get<n>(this->m_weights).transpose() * scale; // AxB * Bx1 = Ax1
+		std::get<n>(this->m_weights) += scale * input.transpose(); // BxA = Bx1 * 1xA
+		std::get<n>(this->m_biases) += scale; // 
 
 		return input + d_input;
 	}

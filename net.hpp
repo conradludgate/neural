@@ -25,6 +25,20 @@ public:
 		random<0>();
 	}
 
+	void Save(const char* filename)
+	{
+		std::ofstream ofs(filename);
+		boost::archive::binary_oarchive oa(ofs);
+    	oa << *this;
+	}
+
+	void Load(const char* filename)
+	{
+		std::ifstream ifs(filename);
+		boost::archive::binary_iarchive ia(ifs);
+    	ia >> *this;
+	}
+
 	vec<last> process(vec<First> input)
 	{
 		return process<0, First, Second, Further...>(input);

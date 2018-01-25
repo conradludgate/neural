@@ -11,8 +11,8 @@
 To Train a network, 
 you need to create a `neural::Trainer` class with a data function.
 
-Let's say we're making a network with the amount of nodes being 16, 20, 20, 16
-respectively, this is what our trainer would look like
+Let's say we're making a network with the amount of nodes in each layer being
+16, 20, 20, 16 respectively, this is what our trainer would look like
 
 ```c++
 class ExampleTrainer: public neural::Trainer<16, 20, 20, 8>
