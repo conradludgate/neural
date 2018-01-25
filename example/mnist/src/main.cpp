@@ -2,16 +2,15 @@
 #include <string>
 #include <fstream>
 
-#include "mnist/mnist.hpp"
+#include "mnist.hpp"
 
 int main()
 {
 	// Init and Zero trainer
 	MNISTTrainer mnist;
-	mnist.Zero();
 
 	// Begin Training
-	mnist.train(0.01, 5E-5);
+	mnist.train(0.01, 1E-6);
 
 	// Get random image
 	int index = rand() % 60000;
@@ -40,7 +39,5 @@ int main()
 	std::cout << "Expected " << big << std::endl;
 
 	// Save network to a file
-	std::ofstream ofs("mnist-network");
-	boost::archive::binary_oarchive oa(ofs);
-    oa << mnist;
+	mnist.Save("mnist-network");
 }
