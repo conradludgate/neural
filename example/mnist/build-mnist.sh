@@ -1,1 +1,0 @@
-g++ -I ../../.. -I include -I /usr/include/eigen3 src/*.cpp -o mnist -std=c++1z -lboost_serialization

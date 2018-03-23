@@ -5,14 +5,16 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 
+#include <fstream>
+
 namespace neural
 {
 
-template<ui First, ui Second, ui... Further>
+template<int First, int Second, int... Further>
 class Net
 {
 
-static const ui last = get_last<Second, Further...>();
+static const int last = get_last<Second, Further...>();
 
 public:
 	void Zero()
@@ -48,12 +50,13 @@ protected:
 	decltype(make_weights<First, Second, Further...>()) m_weights;
 	decltype(make_biases<Second, Further...>()) m_biases;
 
-	template<ui n, ui A, ui B, ui... Is>
+	template<int n, int A, int B, int... Is>
 	vec<get_last<B, Is...>()> process(vec<A> input)
 	{
 		if constexpr(sizeof...(Is) == 0)
 	    {
-	        return relu<B>(std::get<n>(m_weights) * input + std::get<n>(m_biases));
+	        //return relu<B>(std::get<n>(m_weights) * input + std::get<n>(m_biases));
+	        return std::get<n>(m_weights) * input + std::get<n>(m_biases);
 	    }
 	    else
 	    {
@@ -62,7 +65,7 @@ protected:
 	}
 
 private:
-	template<ui n>
+	template<int n>
 	void random()
 	{
 		std::get<n>(m_weights).setRandom();
@@ -74,7 +77,7 @@ private:
 		}
 	}
 
-	template<ui n>
+	template<int n>
 	void zero()
 	{
 		std::get<n>(m_weights).setZero();
@@ -94,7 +97,7 @@ private:
         _serialize<Archive, 0>(ar, version);
     }
 
-    template<class Archive, ui n>
+    template<class Archive, int n>
     void _serialize(Archive & ar, const unsigned int version)
     {
         auto w = std::get<n>(m_weights);
