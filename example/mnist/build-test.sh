@@ -1,0 +1,1 @@
+g++ -I ../../.. -I /usr/include/eigen3 src/test.cpp -o test -std=c++1z -lboost_serialization -O3

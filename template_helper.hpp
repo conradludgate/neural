@@ -3,66 +3,98 @@
 #include <Eigen/Dense>
 #include <tuple>
 
-using ui = std::uint32_t;
+// Used a lot...
+//using ui = std::uint32_t;
 
-template<ui A>
+// Shorthand for vectors
+template<int A>
 using vec = Eigen::Matrix<float, A, 1>;
 
-template<ui A, ui B>
+// Shorthand for matricies
+template<int A, int B>
 using mat = Eigen::Matrix<float, A, B>;
 
-template<ui A, ui... Is>
-constexpr ui get_last()
-{
-	if constexpr(sizeof...(Is) == 0)
-    {
-        return A;
-    }
-    else
-    {
-        return get_last<Is...>();
-    }
-}
-
-template<ui... Is>
-ui count()
-{
-	return sizeof...(Is);
-}
-
-template <ui A, ui B, ui... Is>
-auto make_weights()
-{   
-    if constexpr(sizeof...(Is) == 0)
-    {
-        return std::tuple<mat<B, A>>{};
-    }
-    else
-    {
-        return std::tuple_cat(make_weights<A, B>(), 
-        	make_weights<B, Is...>());
-    }
-}
-
-template <ui B, ui... Is>
-auto make_biases()
+template<int B, int... Is>
+constexpr int get_last()
 {
 	if constexpr(sizeof...(Is) == 0)
 	{
-		return std::tuple<vec<B>>{};
+		return B;
 	}
 	else
 	{
-		return std::tuple_cat(make_biases<B>(), make_biases<Is...>());
+		return get_last<Is...>();
 	}
 }
 
-template<ui B>
+template <int A, int B>
+auto make_weights()
+{
+	return std::tuple<mat<B, A>>{};
+}
+
+template <int A, int B, int C>
+auto make_weights()
+{
+	return std::tuple<mat<B, A>, mat<C, B>>{};
+}
+
+template <int A, int B, int C, int D>
+auto make_weights()
+{
+	return std::tuple<mat<B, A>, mat<C, B>, mat<D, C>>{};
+}
+
+template <int A, int B, int C, int D, int E, int... Is>
+auto make_weights()
+{   
+	if constexpr(sizeof...(Is) == 0)
+	{
+		return std::tuple<mat<B, A>, mat<C, B>, mat<D, C>, mat<E, D>>{};
+	}
+	else
+	{
+		return std::tuple_cat(make_weights<A, B, C, D, E>(), make_weights<E, Is...>());
+	}
+}
+
+template <int B>
+auto make_biases()
+{
+	return std::tuple<vec<B>>{};
+}
+
+template <int B, int C>
+auto make_biases()
+{
+	return std::tuple<vec<B>, vec<C>>{};
+}
+
+template <int B, int C, int D>
+auto make_biases()
+{
+	return std::tuple<vec<B>, vec<C>, vec<D>>{};
+}
+
+template <int B, int C, int D, int E, int... Is>
+auto make_biases()
+{   
+	if constexpr(sizeof...(Is) == 0)
+	{
+		return std::tuple<vec<B>, vec<C>, vec<D>, vec<E>>{};
+	}
+	else
+	{
+		return std::tuple_cat(make_biases<B, C, D, E>(), make_biases<Is...>());
+	}
+}
+
+template<int B>
 vec<B> relu(vec<B> v)
 {
-    for (int i = 0; i < B; ++i)
-        if (v[i] < 0)
-            v[i] = 0;
+	for (int i = 0; i < B; ++i)
+		if (v[i] < 0)
+			v[i] = 0;
 
-    return v;
+	return v;
 }
