@@ -1,2 +1,2 @@
-*log
-example/mnist/networks/*
+example/mnist/build
+example/mnist/mnist

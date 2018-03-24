@@ -2,9 +2,6 @@
 
 #include <neural/template_helper.hpp>
 
-#include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/binary_iarchive.hpp>
-
 #include <fstream>
 
 namespace neural
@@ -27,32 +24,22 @@ public:
 		random<0>();
 	}
 
-	void Save(const char* filename)
+	void Constant(float c)
 	{
-		std::ofstream ofs(filename);
-		boost::archive::binary_oarchive oa(ofs);
-    	oa << *this;
+		constant<0>(c);
 	}
 
-	void Load(const char* filename)
-	{
-		std::ifstream ifs(filename);
-		boost::archive::binary_iarchive ia(ifs);
-    	ia >> *this;
-	}
-
-	vec<last> process(vec<First> input)
+	vec<last> predict(vec<First> input)
 	{
 		return process<0, First, Second, Further...>(input);
 	}
 
-	
 protected:
 	decltype(make_weights<First, Second, Further...>()) m_weights;
 	decltype(make_biases<Second, Further...>()) m_biases;
 
 	template<int n, int A, int B, int... Is>
-	vec<get_last<B, Is...>()> process(vec<A> input)
+	vec<get_last<B, Is...>()> predict(vec<A> input)
 	{
 		if constexpr(sizeof...(Is) == 0)
 	    {
@@ -89,31 +76,17 @@ private:
 		}
 	}
 
-	// For serialization of the network
-	friend class boost::serialization::access;
-    template<class Archive>
-    void serialize(Archive & ar, const unsigned int version)
-    {
-        _serialize<Archive, 0>(ar, version);
-    }
-
-    template<class Archive, int n>
-    void _serialize(Archive & ar, const unsigned int version)
-    {
-        auto w = std::get<n>(m_weights);
-        for (int j = 0; j < w.cols(); ++j)
-        	for (int i = 0; i < w.rows(); ++i)
-        		ar & w(i, j);
-
-		auto b = std::get<n>(m_biases);
-		for (int i = 0; i < b.rows(); ++i)
-			ar & b[i];
+	template<int n>
+	void constant(float c)
+	{
+		std::get<n>(m_weights).setConstant(c);
+		std::get<n>(m_biases).setConstant(c);
 
 		if constexpr(sizeof...(Further) != n)
 		{
-			_serialize<Archive, n+1>(ar, version);
+			zero<n+1>();
 		}
-    }
+	}
 };
 
 }

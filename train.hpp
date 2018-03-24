@@ -13,13 +13,6 @@
 namespace neural
 {
 
-// template<ui A, ui B>
-// struct TestData
-// {
-// 	vec<A> input;
-// 	vec<B> expected;
-// };
-
 template<int First, int Second, int... Further>
 class Trainer: public Net<First, Second, Further...>
 {
@@ -28,9 +21,10 @@ static const int last = get_last<Second, Further...>();
 
 public:
 
-	void train(vec<First> input, vec<get_last<Second, Further...>()> expected)
+	float train(vec<First> input, vec<last> expected)
 	{
-		back_prop<0, First, Second, Further...>(input, expected);
+		auto delta = back_prop<0, First, Second, Further...>(input, expected);
+		return delta.dot(delta);
 	}
 
 	void set_lr(float lr)
@@ -45,14 +39,14 @@ public:
 
 private:
 	template<int n, int A, int B, int... Is>
-	vec<A> back_prop(vec<A> input, vec<get_last<B, Is...>()> expected)
+	vec<A> back_prop(vec<A> input, vec<last> expected)
 	{
 		vec<B> output = g<B>(std::get<n>(this->m_weights) * input + std::get<n>(this->m_biases));
 		vec<B> scale;
 
 		if constexpr(sizeof...(Is) != 0)
 		{
-			scale = back_prop<n+1, B, Is...>(output, expected);
+			scale = learning_rate * back_prop<n+1, B, Is...>(output, expected);
 		} else {
 			scale = learning_rate * (output - expected);
 		}
@@ -72,7 +66,6 @@ private:
 		return dinput;
 	}
 
-	//float average = 1;
 	float learning_rate = 0.1;
 };
 
