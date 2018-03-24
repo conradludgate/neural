@@ -117,7 +117,7 @@ template<int B>
 vec<B> g(vec<B> v)
 {
 	for (int i = 0; i < B; ++i)
-		v[i] = 1 / (1 - exp(-v[i]));
+		v[i] = 1 / (1 + exp(-v[i]));
 
 	return v;
 }
