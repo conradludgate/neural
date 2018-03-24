@@ -38,48 +38,38 @@ public:
 		learning_rate = lr;
 	}
 
-// 	void train(float tol, float p)
-// 	{
-// 		assert(tol > 0);
-// 		//assert(p > 0);
-
-// 		float cost = 0;
-// 		while (average >= tol)
-// 		{
-// 			// Get test data
-// 			auto td = dataf();
-
-// 			// Perform back propagation
-// 			back_prop<0, First, Second, Further...>(td.input, td.expected, p, cost);
-// 			average = (average + cost) / 2;
-// 			DEBUG_LOG(cost);
-// 		}
-// 	}
-
-// protected:
-// 	virtual TestData<First, last> dataf() = 0;
+	float get_lr()
+	{
+		return learning_rate;
+	}
 
 private:
 	template<int n, int A, int B, int... Is>
 	vec<A> back_prop(vec<A> input, vec<get_last<B, Is...>()> expected)
 	{
-		//vec<B> output = relu<B>(std::get<n>(this->m_weights) * input + std::get<n>(this->m_biases));
-		vec<B> output = std::get<n>(this->m_weights) * input + std::get<n>(this->m_biases);
-
+		vec<B> output = g<B>(std::get<n>(this->m_weights) * input + std::get<n>(this->m_biases));
 		vec<B> scale;
 
 		if constexpr(sizeof...(Is) != 0)
 		{
-			scale = learning_rate * 2 * (back_prop<n+1, B, Is...>(output, expected) - output);
+			scale = back_prop<n+1, B, Is...>(output, expected);
 		} else {
-			scale = learning_rate * 2 * (expected - output);
+			scale = learning_rate * (output - expected);
 		}
-		
-		auto d_input = std::get<n>(this->m_weights).transpose() * scale; // AxB * Bx1 = Ax1
-		std::get<n>(this->m_weights) += scale * input.transpose(); // BxA = Bx1 * 1xA
-		std::get<n>(this->m_biases) += scale;
 
-		return input + d_input;
+		vec<B>& bias = std::get<n>(this->m_biases);
+		mat<B, A>& weight = std::get<n>(this->m_weights);
+
+		gprime(scale, output);
+		vec<A> dinput = weight.transpose() * scale;
+
+		for (int i = 0; i < B; i++)
+		{
+			bias[i] -= scale[i];
+			weight.row(i) -= scale[i] * input;
+		}
+
+		return dinput;
 	}
 
 	//float average = 1;
@@ -87,3 +77,4 @@ private:
 };
 
 }
+

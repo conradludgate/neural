@@ -1,3 +1,2 @@
-*/log
-example/mnist/mnist
-example/mnist/mnist-network
+*log
+example/mnist/networks/*
