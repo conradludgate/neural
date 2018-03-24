@@ -1,3 +1,7 @@
+/// data.cpp
+/// loads the mnist databases
+/// also processes the data to be used by the nn
+
 #ifndef IMAGE_SIZE
 #define IMAGE_SIZE 784
 #endif
@@ -40,6 +44,7 @@ void prepare_testing_data()
 	labels = &test_labels;
 }
 
+// Turns the nn output into a single value
 int get_output(vec<10> output)
 {
 	int big = 0;
@@ -52,6 +57,7 @@ int get_output(vec<10> output)
 	return big;
 }
 
+// Create a vector type to enter into the network
 vec<IMAGE_SIZE> get_image(int index)
 {
 	images->seekg(16 + IMAGE_SIZE*index, std::ios::beg);
@@ -68,6 +74,7 @@ vec<IMAGE_SIZE> get_image(int index)
 	return image;
 }
 
+// What value is expected
 int get_label(int index)
 {
 	labels->seekg(8 + index, std::ios::beg);
