@@ -89,12 +89,42 @@ auto make_biases()
 	}
 }
 
+// ReLU
+// template<int B>
+// vec<B> g(vec<B> v)
+// {
+// 	for (int i = 0; i < B; ++i)
+// 		if (v[i] < 0)
+// 		{
+// 			v[i] = 0;
+// 		}
+
+// 	return v;
+// }
+
+// template<int B>
+// void gprime(vec<B>& s, vec<B> v)
+// {
+// 	for (int i = 0; i < B; ++i)
+// 		if (v[i] <= 0)
+// 		{
+// 			s[i] = 0;
+// 		}
+// }
+
+// Sigmoid
 template<int B>
-vec<B> relu(vec<B> v)
+vec<B> g(vec<B> v)
 {
 	for (int i = 0; i < B; ++i)
-		if (v[i] < 0)
-			v[i] = 0;
+		v[i] = 1 / (1 - exp(-v[i]));
 
 	return v;
+}
+
+template<int B>
+void gprime(vec<B>& s, vec<B> v)
+{
+	for (int i = 0; i < B; ++i)
+		s[i] *= (1 - v[i]) * v[i];
 }

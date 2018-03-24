@@ -46,6 +46,7 @@ public:
 		return process<0, First, Second, Further...>(input);
 	}
 
+	
 protected:
 	decltype(make_weights<First, Second, Further...>()) m_weights;
 	decltype(make_biases<Second, Further...>()) m_biases;
@@ -55,8 +56,7 @@ protected:
 	{
 		if constexpr(sizeof...(Is) == 0)
 	    {
-	        //return relu<B>(std::get<n>(m_weights) * input + std::get<n>(m_biases));
-	        return std::get<n>(m_weights) * input + std::get<n>(m_biases);
+	        return g<B>(std::get<n>(m_weights) * input + std::get<n>(m_biases));
 	    }
 	    else
 	    {
