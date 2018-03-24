@@ -3,9 +3,6 @@
 #include <Eigen/Dense>
 #include <tuple>
 
-// Used a lot...
-//using ui = std::uint32_t;
-
 // Shorthand for vectors
 template<int A>
 using vec = Eigen::Matrix<float, A, 1>;

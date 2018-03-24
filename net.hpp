@@ -31,7 +31,7 @@ public:
 
 	vec<last> predict(vec<First> input)
 	{
-		return process<0, First, Second, Further...>(input);
+		return predict<0, First, Second, Further...>(input);
 	}
 
 protected:
@@ -47,7 +47,7 @@ protected:
 	    }
 	    else
 	    {
-			return process<n+1, B, Is...>(process<n, A, B>(input));
+			return predict<n+1, B, Is...>(predict<n, A, B>(input));
 		}
 	}
 
