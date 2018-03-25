@@ -4,19 +4,23 @@
 
 #include <iostream>
 
-#include "neural/train.hpp"
+#include "neural/net.hpp"
+
+typedef neural::Net<IMAGE_SIZE, 10,
+			neural::NeuronLayer<IMAGE_SIZE, 30>,
+			neural::NeuronLayer<30, 10>> NN;
 
 void load_data();
 void prepare_training_data();
 void prepare_testing_data();
 
-float test(neural::Net<IMAGE_SIZE, 30, 10>& nn);
-void train_epoch(neural::Trainer<IMAGE_SIZE, 30, 10>& nn);
+float train_epoch(NN& nn, float lr);
+float test(NN& nn);
 
 int main(int argc, char *argv[])
 {
-	// Create and initialise a trainer network
-	neural::Trainer<IMAGE_SIZE, 30, 10> mnist;
+	// Create and initialise the network
+	NN mnist;
 	mnist.Random();	
 
 	// Load the training and testing data
@@ -26,7 +30,6 @@ int main(int argc, char *argv[])
 	float lr = 0.1;
 	std::cout << "> Learning Rate: ";
 	std::cin >> lr;
-	mnist.set_lr(lr);
 
 	// Train until satisfied.
 	float score = 0;
@@ -35,7 +38,7 @@ int main(int argc, char *argv[])
 	{
 		// Train
 		prepare_training_data();
-		train_epoch(mnist);
+		train_epoch(mnist, lr);
 
 		// Test
 		prepare_testing_data();

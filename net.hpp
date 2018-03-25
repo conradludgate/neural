@@ -1,90 +1,81 @@
 #pragma once
 
-#include <neural/template_helper.hpp>
+#include <neural/layer.hpp>
 
 #include <fstream>
 
 namespace neural
 {
 
-template<int First, int Second, int... Further>
+template<int Inputs, int Outputs, typename A, typename... Bs>
 class Net
 {
-
-static const int last = get_last<Second, Further...>();
-
 public:
-	void Zero()
+	void Zero() { zero<0>(); }
+	void Random() { random<0>(); }
+	void Constant(Scalar c) { constant<0>(); }
+
+	vec<Outputs> predict(vec<Inputs> input)
 	{
-		zero<0>();
+		return predict<0, A, Bs...>(input);
 	}
 
-	void Random()
+	void train(Scalar lr, vec<Inputs> input, vec<Outputs> target)
 	{
-		random<0>();
-	}
-
-	void Constant(float c)
-	{
-		constant<0>(c);
-	}
-
-	vec<last> predict(vec<First> input)
-	{
-		return predict<0, First, Second, Further...>(input);
-	}
-
-protected:
-	decltype(make_weights<First, Second, Further...>()) m_weights;
-	decltype(make_biases<Second, Further...>()) m_biases;
-
-	template<int n, int A, int B, int... Is>
-	vec<get_last<B, Is...>()> predict(vec<A> input)
-	{
-		if constexpr(sizeof...(Is) == 0)
-	    {
-	        return g<B>(std::get<n>(m_weights) * input + std::get<n>(m_biases));
-	    }
-	    else
-	    {
-			return predict<n+1, B, Is...>(predict<n, A, B>(input));
-		}
+		train<sizeof...(Bs), Outputs>(lr * (target - predict(input)));
 	}
 
 private:
-	template<int n>
-	void random()
-	{
-		std::get<n>(m_weights).setRandom();
-		std::get<n>(m_biases).setRandom();
-
-		if constexpr(sizeof...(Further) != n)
-		{
-			random<n+1>();
-		}
-	}
+	std::tuple<A, Bs...> neuron_layers;
 
 	template<int n>
 	void zero()
 	{
-		std::get<n>(m_weights).setZero();
-		std::get<n>(m_biases).setZero();
-
-		if constexpr(sizeof...(Further) != n)
-		{
+		std::get<n>(this->neuron_layers).Zero();
+		if constexpr(sizeof...(Bs) != n)
 			zero<n+1>();
-		}
 	}
 
 	template<int n>
-	void constant(float c)
+	void random()
 	{
-		std::get<n>(m_weights).setConstant(c);
-		std::get<n>(m_biases).setConstant(c);
+		std::get<n>(this->neuron_layers).Random();
+		if constexpr(sizeof...(Bs) != n)
+			random<n+1>();
+	}
 
-		if constexpr(sizeof...(Further) != n)
+	template<int n>
+	void constant(Scalar c)
+	{
+		std::get<n>(this->neuron_layers).Constant(c);
+		if constexpr(sizeof...(Bs) != n)
+			constant<n+1>();
+	}
+
+	template<int n, typename _A, typename... _Bs>
+	vec<Outputs> predict(vec<_A::Inputs> input)
+	{
+		if constexpr(sizeof...(_Bs) == 0)
 		{
-			zero<n+1>();
+			return std::get<n>(this->neuron_layers).feedforward(input);
+		}
+		else
+		{
+			return predict<n+1, _Bs...>(std::get<n>(this->neuron_layers).feedforward(input));
+		}
+	}
+
+	template<int n, int outputs>
+	void train(vec<outputs> error)
+	{
+		if constexpr(n == 0)
+		{
+			std::get<n>(this->neuron_layers).feedbackward(error);
+		}
+		else
+		{
+			auto layer = std::get<n>(this->neuron_layers);
+			train<n-1, decltype(layer)::Inputs>(layer.feedbackward(error));
 		}
 	}
 };

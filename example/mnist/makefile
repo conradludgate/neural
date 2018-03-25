@@ -2,7 +2,7 @@
 # Compiler flags
 #
 CXX = g++
-CXXFLAGS = -std=c++1z -I ../../.. -I /usr/include/eigen3
+CXXFLAGS = -std=c++17 -I ../../.. -I /usr/include/eigen3
 
 #
 # Project files
