@@ -2,55 +2,71 @@
 
 #include <Eigen/Dense>
 #include <tuple>
+#include <iostream>
+#include <functional>
 
-typedef float Scalar;
+#include "neural/util.hpp"
 
-template<int A>
-using vec = Eigen::Matrix<Scalar, A, 1>;
-
-template<int A, int B>
-using mat = Eigen::Matrix<Scalar, A, B>;
+class ANN;
 
 namespace neural
 {
 
 template<int A, int B>
-class NeuronLayer
+class Layer //: public ANN
 {
 public:
 
-	static const int Inputs = A;
-	static const int Outputs = B;
+	static const int I = A;
+	static const int O = B;
 
-	void Zero()
-	{
-		weight = mat<B, A>::Zero();
-		bias = vec<B>::Zero();
-	}
-
-	void Random()
+	void random()
 	{
 		weight = mat<B, A>::Random();
 		bias = vec<B>::Random();
 	}
 
-	void Constant(Scalar c)
+	std::ostream& save(std::ostream& os)
 	{
-		weight = mat<B, A>::Constant(c);
-		bias = vec<B>::Constant(c);
+		for (int i = 0; i < B; i++)
+		{
+			for (int j = 0; j < A; j++)
+			{
+				os << weight[i, j];
+			}
+			os << bias[i];
+		}
+
+		return os;
+	}
+
+	std::istream& load(std::istream& is)
+	{
+		for (int i = 0; i < B; i++)
+		{
+			for (int j = 0; j < A; j++)
+			{
+				is << weight[i, j];
+			}
+			is << bias[i];
+		}
+
+		return is;
 	}
 
 	vec<B> feedforward(vec<A> input)
 	{
 		last_input = input;
 		last_output = g(weight * input + bias);
+
 		return last_output;
 	}
 
 	// error = δError/δOutput
 	vec<A> feedbackward(vec<B> error)
 	{
-		gprime(error, last_output);
+		
+		error = gprime(error, last_output);
 
 		vec<A> dinput = weight.transpose() * error;
 		bias += error;
@@ -66,18 +82,43 @@ private:
 	mat<B, A> weight;
 	vec<B> bias;
 
-	vec<B> g(vec<B> v)
+	vec<B> g(const vec<B>& v)
 	{
-		for (int i = 0; i < B; ++i)
-			v[i] = 1 / (1 + exp(-v[i]));
-
-		return v;
+		return v.unaryExpr(std::ref(Layer<A, B>::sigmoid));
+		//return v.unaryExpr(std::ref(Layer<A, B>::relu));
 	}
 
-	void gprime(vec<B>& s, vec<B> v)
+	// error = δError/δOutput * δOutput/δg
+	vec<B> gprime(const vec<B>& error, const vec<B>& output)
+	{	
+		return error.binaryExpr(output, std::ref(Layer<A, B>::sigmoid_prime));
+		//return error.binaryExpr(output, std::ref(Layer<A, B>::relu_prime));
+	}
+
+	static Scalar sigmoid(const Scalar& x)
 	{
-		for (int i = 0; i < B; ++i)
-			s[i] *= (1 - v[i]) * v[i];
+		return 1 / (exp(-x) + 1);
+	}
+
+	static Scalar sigmoid_prime(const Scalar& a, const Scalar& b)
+	{
+		return a * (1 - b) * b;
+	}
+
+	static Scalar relu(const Scalar& x)
+	{
+		if (x > 0) 
+			return x;
+		else
+			return 0;
+	}
+
+	static Scalar relu_prime(const Scalar& a, const Scalar& b)
+	{
+		if (b > 0)
+			return a;
+		else
+			return 0;
 	}
 };
 

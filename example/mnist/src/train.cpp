@@ -2,11 +2,14 @@
 #define IMAGE_SIZE 784
 #endif
 
-#include <neural/net.hpp>
+#include <utility>
 
-typedef neural::Net<IMAGE_SIZE, 10,
-			neural::NeuronLayer<IMAGE_SIZE, 30>,
-			neural::NeuronLayer<30, 10>> NN;
+#include <neural/net.hpp>
+#include <neural/layer.hpp>
+
+typedef neural::Net<
+			neural::Layer<IMAGE_SIZE, 30>,
+			neural::Layer<30, 10>> NN;
 
 int get_output(vec<10> output);
 vec<IMAGE_SIZE> get_image(int index);
@@ -34,7 +37,8 @@ float test(NN& nn)
 	for (int index = 0; index < 10000; index++)
 	{
 		// Generate an output and make it more accesible
-		int output = get_output(nn.predict(get_image(index)));
+		int output = get_output(nn.feedforward(
+			std::forward<vec<IMAGE_SIZE>>(get_image(index))));
 
 		// If the output is what we expected, increment the score
 		if (output == get_label(index))

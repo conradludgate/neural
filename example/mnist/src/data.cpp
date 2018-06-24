@@ -8,6 +8,7 @@
 
 #include <fstream>
 #include <Eigen/Dense>
+#include <iostream>
 
 template<int A>
 using vec = Eigen::Matrix<float, A, 1>;

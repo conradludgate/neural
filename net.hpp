@@ -1,81 +1,116 @@
 #pragma once
 
-#include <neural/layer.hpp>
+#include <iostream>
+#include <type_traits>
 
-#include <fstream>
+#include "neural/util.hpp"
 
 namespace neural
 {
 
-template<int Inputs, int Outputs, typename A, typename... Bs>
-class Net
-{
-public:
-	void Zero() { zero<0>(); }
-	void Random() { random<0>(); }
-	void Constant(Scalar c) { constant<0>(); }
+// template<int I, int O>
+// class ANN
+// {
+// public:
+// 	virtual void random() = 0;
+// 	virtual vec<O>& feedforward(vec<I>&) = 0;
+// 	virtual vec<I>& feedbackward(vec<O>&) = 0;
+// 	virtual std::ostream& operator<<(std::ostream&) = 0;
+// 	virtual std::istream& operator>>(std::istream&) = 0;
+// };
 
-	vec<Outputs> predict(vec<Inputs> input)
+template<typename A, typename... Bs>
+class Net //: public ANN
+{
+private:
+	std::tuple<A, Bs...> layers;
+
+public:
+
+	// Input and output
+	static const int I = A::I;
+	static const int O = std::tuple_element<sizeof...(Bs), decltype(layers)>::type::O;
+
+	void random() { random<0>(); }
+	std::ostream& operator<<(std::ostream& os) { return save<0>(os); } 
+	std::istream& operator>>(std::istream& is) { return load<0>(is); } 
+
+	void train(Scalar lr, vec<I> input, vec<O> target)
 	{
-		return predict<0, A, Bs...>(input);
+		feedbackward(lr, (target - feedforward(input)));
 	}
 
-	void train(Scalar lr, vec<Inputs> input, vec<Outputs> target)
+	vec<O> feedforward(vec<I> input)
 	{
-		train<sizeof...(Bs), Outputs>(lr * (target - predict(input)));
+		return feedforward<0, I>(input);
+	}
+
+	vec<I> feedbackward(Scalar lr, vec<O> error)
+	{
+		return feedbackward<sizeof...(Bs), O>(lr, error);
 	}
 
 private:
-	std::tuple<A, Bs...> neuron_layers;
-
-	template<int n>
-	void zero()
-	{
-		std::get<n>(this->neuron_layers).Zero();
-		if constexpr(sizeof...(Bs) != n)
-			zero<n+1>();
-	}
 
 	template<int n>
 	void random()
 	{
-		std::get<n>(this->neuron_layers).Random();
+		std::get<n>(layers).random();
 		if constexpr(sizeof...(Bs) != n)
 			random<n+1>();
 	}
 
 	template<int n>
-	void constant(Scalar c)
+	std::ostream& save(std::ostream& os)
 	{
-		std::get<n>(this->neuron_layers).Constant(c);
-		if constexpr(sizeof...(Bs) != n)
-			constant<n+1>();
+		std::get<n>(layers).save(os);
+		if constexpr(n != sizeof...(Bs))
+		{
+			save<n+1>(os);
+		}
+		return os;
 	}
 
-	template<int n, typename _A, typename... _Bs>
-	vec<Outputs> predict(vec<_A::Inputs> input)
+	template<int n>
+	std::istream& load(std::istream& is)
 	{
-		if constexpr(sizeof...(_Bs) == 0)
+		std::get<n>(layers).load(is);
+		if constexpr(n != sizeof...(Bs))
 		{
-			return std::get<n>(this->neuron_layers).feedforward(input);
+			load<n+1>(is);
+		}
+		return is;
+	}
+
+	template<int n, int inputs>
+	vec<O> feedforward(vec<inputs> input)
+	{
+		auto& l = std::get<n>(layers);
+		if constexpr(n == sizeof...(Bs))
+		{
+			return l.feedforward(input);
 		}
 		else
 		{
-			return predict<n+1, _Bs...>(std::get<n>(this->neuron_layers).feedforward(input));
+			return feedforward<n+1, 
+				std::tuple_element<n, decltype(layers)>::type::O
+			>(l.feedforward(input));
 		}
 	}
 
 	template<int n, int outputs>
-	void train(vec<outputs> error)
+	vec<I> feedbackward(Scalar lr, vec<outputs> error)
 	{
+		auto& l = std::get<n>(layers);
 		if constexpr(n == 0)
 		{
-			std::get<n>(this->neuron_layers).feedbackward(error);
+			return l.feedbackward(lr * error);
 		}
 		else
 		{
-			auto layer = std::get<n>(this->neuron_layers);
-			train<n-1, decltype(layer)::Inputs>(layer.feedbackward(error));
+			return feedbackward<n-1, 
+				std::tuple_element<n, decltype(layers)>::type::I
+			>(lr, l.feedbackward(lr * error));
 		}
 	}
 };

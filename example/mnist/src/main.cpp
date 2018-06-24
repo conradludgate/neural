@@ -4,11 +4,15 @@
 
 #include <iostream>
 
-#include "neural/net.hpp"
+#include <cstdlib>
+#include <ctime>
 
-typedef neural::Net<IMAGE_SIZE, 10,
-			neural::NeuronLayer<IMAGE_SIZE, 30>,
-			neural::NeuronLayer<30, 10>> NN;
+#include "neural/net.hpp"
+#include "neural/layer.hpp"
+
+typedef neural::Net<
+			neural::Layer<IMAGE_SIZE, 30>,
+			neural::Layer<30, 10>> NN;
 
 void load_data();
 void prepare_training_data();
@@ -19,9 +23,11 @@ float test(NN& nn);
 
 int main(int argc, char *argv[])
 {
+	srand (time(NULL));
+
 	// Create and initialise the network
 	NN mnist;
-	mnist.Random();	
+	mnist.random();	
 
 	// Load the training and testing data
 	load_data();
