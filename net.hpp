@@ -40,12 +40,12 @@ public:
 		feedbackward(lr, (target - feedforward(input)));
 	}
 
-	vec<O> feedforward(vec<I> input)
+	vec<O> feedforward(const vec<I>& input)
 	{
 		return feedforward<0, I>(input);
 	}
 
-	vec<I> feedbackward(Scalar lr, vec<O> error)
+	vec<I> feedbackward(Scalar lr, const vec<O>& error)
 	{
 		return feedbackward<sizeof...(Bs), O>(lr, error);
 	}
@@ -99,7 +99,7 @@ private:
 	}
 
 	template<int n, int outputs>
-	vec<I> feedbackward(Scalar lr, vec<outputs> error)
+	vec<I> feedbackward(Scalar lr, const vec<outputs>& error)
 	{
 		auto& l = std::get<n>(layers);
 		if constexpr(n == 0)

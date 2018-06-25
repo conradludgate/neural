@@ -23,7 +23,7 @@ float test(NN& nn);
 
 int main(int argc, char *argv[])
 {
-	srand (time(NULL));
+	srand (time(nullptr));
 
 	// Create and initialise the network
 	NN mnist;

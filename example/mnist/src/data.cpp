@@ -18,8 +18,8 @@ std::ifstream train_labels;
 std::ifstream test_images;
 std::ifstream test_labels;
 
-std::ifstream* images;
-std::ifstream* labels;
+std::ifstream* images = nullptr;
+std::ifstream* labels = nullptr;
 
 void load_data()
 {

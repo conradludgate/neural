@@ -1,0 +1,131 @@
+<head>
+	<title>MNIST Tester</title>
+	<style>
+		#canvas { 
+			position: relative;
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="560", height="560"></canvas>
+	<div>
+	<button onclick="send()">Send</button>
+	<button onclick="clear()">Clear</button>
+	<p id="result">Result:</p>
+	</div>
+
+	<script type="text/javascript">
+	var canvas, ctx;
+	window.onload = function() {
+		canvas = document.getElementById("canvas");
+		ctx = canvas.getContext("2d");
+		ctx.fillStyle = "#fff";
+		ctx.rect(0, 0, 560, 560);
+		ctx.fill();
+		ctx.lineWidth = 40;
+
+		var drawing = false;
+		canvas.addEventListener("mousedown", function (e) {
+			ctx.beginPath()
+			var p = getMousePos(canvas, e)
+			ctx.moveTo(p.x, p.y);
+			drawing = true;
+		}, false);
+		canvas.addEventListener("mouseup", function (e) {
+			if (drawing) {
+				var p = getMousePos(canvas, e)
+				ctx.lineTo(p.x, p.y);
+				ctx.stroke();
+				drawing = false;
+			}
+		}, false);
+		canvas.addEventListener("mousemove", function (e) {
+			if (drawing) {
+				var p = getMousePos(canvas, e)
+				ctx.lineTo(p.x, p.y);
+				ctx.stroke();
+			}
+		}, false);
+
+		// Set up touch events for mobile, etc
+		canvas.addEventListener("touchstart", function (e) {
+			ctx.beginPath()
+			var p = getTouchPos(canvas, e)
+			ctx.moveTo(p.x, p.y);
+			drawing = true;
+		}, false);
+		canvas.addEventListener("touchend", function (e) {
+			if (drawing) {
+				var p = getTouchPos(canvas, e)
+				ctx.lineTo(p.x, p.y);
+				ctx.stroke();
+				drawing = false;
+			}
+		}, false);
+		canvas.addEventListener("touchmove", function (e) {
+			if (drawing) {
+				var p = getTouchPos(canvas, e)
+				ctx.lineTo(p.x, p.y);
+				ctx.stroke();
+			}
+		}, false);
+	}
+
+	// Prevent scrolling when touching the canvas
+	document.body.addEventListener("touchstart", function (e) {
+		if (e.target == canvas) {
+			e.preventDefault();
+		}
+	}, false);
+	document.body.addEventListener("touchend", function (e) {
+		if (e.target == canvas) {
+			e.preventDefault();
+		}
+	}, false);
+	document.body.addEventListener("touchmove", function (e) {
+		if (e.target == canvas) {
+			e.preventDefault();
+		}
+	}, false);
+
+	// Get the position of the mouse relative to the canvas
+	function getMousePos(canvasDom, mouseEvent) {
+		var rect = canvasDom.getBoundingClientRect();
+		return {
+			x: mouseEvent.clientX - rect.left,
+			y: mouseEvent.clientY - rect.top
+		};
+	}
+
+	// Get the position of a touch relative to the canvas
+	function getTouchPos(canvasDom, touchEvent) {
+		var rect = canvasDom.getBoundingClientRect();
+		return {
+			x: touchEvent.touches[0].clientX - rect.left,
+			y: touchEvent.touches[0].clientY - rect.top
+		};
+	}
+
+	function send() {
+		var data = ctx.getImageData(0, 0, 560, 560).data
+
+		var oReq = new XMLHttpRequest();
+		oReq.onreadystatechange = function () {
+			if (this.readyState == 4 && this.status == 200) {
+				document.getElementById("result").innerHTML = "Result: " + this.responseText;
+			}
+		};
+
+		oReq.open("POST", "/predict", true);
+		oReq.send(data);
+	}
+
+	function clear() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.fillStyle = "#fff";
+		ctx.rect(0, 0, 560, 560);
+		ctx.fill();
+	}
+	</script>
+</body>

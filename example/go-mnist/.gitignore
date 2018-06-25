@@ -1,0 +1,3 @@
+go-bind/*.go
+go-bind/*.cxx
+data/*
