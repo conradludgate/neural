@@ -2,7 +2,19 @@
 # Compiler flags
 #
 CXX = g++
-CXXFLAGS = -std=c++17 -I ../../.. -I /usr/include/eigen3
+CXXFLAGS = -std=c++17 -I ../../..
+
+ifeq ($(OS),Windows_NT)
+    # Window's not currently supported
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+		CXXFLAGS += -I /usr/include/eigen3
+    endif
+    ifeq ($(UNAME_S),Darwin)
+        CXXFLAGS += -I /usr/local/include/eigen3
+    endif
+endif
 
 #
 # Project files

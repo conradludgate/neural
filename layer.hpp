@@ -3,7 +3,6 @@
 #include <Eigen/Dense>
 #include <tuple>
 #include <iostream>
-#include <functional>
 
 #include "neural/util.hpp"
 
@@ -12,25 +11,24 @@ class ANN;
 namespace neural
 {
 
-template<int A, int B>
-class Layer //: public ANN
+template <typename Scalar, int I, int O, typename Activation>
+class LinearLayer //: public ANN
 {
 public:
-
-	static const int I = A;
-	static const int O = B;
+	static const int Inputs = I;
+	static const int Outputs = O;
 
 	void random()
 	{
-		weight = mat<B, A>::Random();
-		bias = vec<B>::Random();
+		weight = mat<Scalar, Outputs, Inputs>::Random();
+		bias = vec<Scalar, Outputs>::Random();
 	}
 
-	std::ostream& save(std::ostream& os)
+	std::ostream &save(std::ostream &os)
 	{
-		for (int i = 0; i < B; i++)
+		for (int i = 0; i < Outputs; i++)
 		{
-			for (int j = 0; j < A; j++)
+			for (int j = 0; j < Inputs; j++)
 			{
 				os << weight[i, j];
 			}
@@ -40,11 +38,11 @@ public:
 		return os;
 	}
 
-	std::istream& load(std::istream& is)
+	std::istream &load(std::istream &is)
 	{
-		for (int i = 0; i < B; i++)
+		for (int i = 0; i < Outputs; i++)
 		{
-			for (int j = 0; j < A; j++)
+			for (int j = 0; j < Inputs; j++)
 			{
 				is << weight[i, j];
 			}
@@ -54,72 +52,34 @@ public:
 		return is;
 	}
 
-	vec<B> feedforward(vec<A> input)
+	template <int Batch>
+	mat<Scalar, Outputs, Batch> feedforward(mat<Scalar, Inputs, Batch> input)
 	{
-		last_input = input;
-		last_output = g(weight * input + bias);
-
-		return last_output;
+		return Activation::template g<Scalar, Outputs, Batch>(weight * input + bias);
 	}
 
-	// error = δError/δOutput
-	vec<A> feedbackward(vec<B> error)
+	template <int Batch, typename Next>
+	mat<Scalar, Inputs, Batch> feedforward_backward(Scalar learning_rate, mat<Scalar, Inputs, Batch> input, mat<Scalar, Next::Outputs, Batch> expected, Next next)
 	{
-		
-		error = gprime(error, last_output);
+		auto output = Activation::template g<Scalar, Outputs, Batch>(weight * input + bias);
 
-		vec<A> dinput = weight.transpose() * error;
+		auto error = Activation::template gprime<Scalar, Outputs>(
+			next.feedforward_backward(learning_rate, output, expected),
+			output);
+
+		auto dinput = weight.transpose() * error;
 		bias += error;
-		weight += error * last_input.transpose();
+		weight += error * input.transpose();
 
-		return dinput;
+		return learning_rate * dinput;
 	}
 
 private:
-	vec<A> last_input;
-	vec<B> last_output;
+	vec<Scalar, Inputs> last_input;
+	vec<Scalar, Outputs> last_output;
 
-	mat<B, A> weight;
-	vec<B> bias;
-
-	vec<B> g(const vec<B>& v)
-	{
-		return v.unaryExpr(std::ref(Layer<A, B>::sigmoid));
-		//return v.unaryExpr(std::ref(Layer<A, B>::relu));
-	}
-
-	// error = δError/δOutput * δOutput/δg
-	vec<B> gprime(const vec<B>& error, const vec<B>& output)
-	{	
-		return error.binaryExpr(output, std::ref(Layer<A, B>::sigmoid_prime));
-		//return error.binaryExpr(output, std::ref(Layer<A, B>::relu_prime));
-	}
-
-	static Scalar sigmoid(const Scalar& x)
-	{
-		return 1 / (exp(-x) + 1);
-	}
-
-	static Scalar sigmoid_prime(const Scalar& a, const Scalar& b)
-	{
-		return a * (1 - b) * b;
-	}
-
-	static Scalar relu(const Scalar& x)
-	{
-		if (x > 0) 
-			return x;
-		else
-			return 0;
-	}
-
-	static Scalar relu_prime(const Scalar& a, const Scalar& b)
-	{
-		if (b > 0)
-			return a;
-		else
-			return 0;
-	}
+	mat<Scalar, Outputs, Inputs> weight;
+	vec<Scalar, Outputs> bias;
 };
 
-}
+} // namespace neural
