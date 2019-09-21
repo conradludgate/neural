@@ -1,0 +1,4 @@
+build/*
+mnist
+data/*
+networks/*
