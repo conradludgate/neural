@@ -29,40 +29,38 @@ auto pop_front(const Tuple &tuple)
 namespace activation
 {
 
+struct Linear
+{
+public:
+    template <typename S, int A, int Batch>
+    const static mat<S, A, Batch> g(const mat<S, A, Batch> &x)
+    {
+        return x;
+    }
+    template <typename S, int A, int Batch>
+    const static mat<S, A, Batch> gprime(
+        const mat<S, A, Batch> &x,
+        const mat<S, A, Batch> &y)
+    {
+        return mat<S, A, Batch>::Ones();
+    }
+};
+
 struct Sigmoid
 {
-private:
-    template <typename S>
-    struct CwiseSigmoid
-    {
-        const S operator()(const S &x) const
-        {
-            return 1 / (exp(-x) + 1);
-        }
-    };
-
-    template <typename S>
-    struct SigmoidPrime
-    {
-        typedef S result_type;
-        const S operator()(const S &a, const S &b) const
-        {
-            return a * (1 - b) * b;
-        }
-    };
 
 public:
-    template <typename S, int A, int B>
-    const static mat<S, A, B> g(const mat<S, A, B> &v)
+    template <typename S, int A, int Batch>
+    const static mat<S, A, Batch> g(const mat<S, A, Batch> &x)
     {
-        return v.unaryExpr(CwiseSigmoid<S>());
+        return 1 / (1 + exp(-x.array()));
     }
-    template <typename S, int A, int B>
-    const static mat<S, A, B> gprime(
-        const mat<S, A, B> &error,
-        const mat<S, A, B> &output)
+    template <typename S, int A, int Batch>
+    const static mat<S, A, Batch> gprime(
+        const mat<S, A, Batch> &x,
+        const mat<S, A, Batch> &y)
     {
-        return error.binaryExpr(output, SigmoidPrime<S>());
+        return y.array() * (1 - y.array());
     }
 };
 
@@ -85,27 +83,27 @@ private:
     struct ReluPrime
     {
         typedef S result_type;
-        const S operator()(const S &a, const S &b) const
+        const S operator()(const S &x) const
         {
-            if (b > 0)
-                return a;
+            if (x > 0)
+                return 1;
             else
                 return 0;
         }
     };
 
 public:
-    template <typename S, int A, int B>
-    const static mat<S, A, B> g(const mat<S, A, B> &v)
+    template <typename S, int A, int Batch>
+    const static mat<S, A, Batch> g(const mat<S, A, Batch> &x)
     {
-        return v.unaryExpr(CwiseRelu<S>());
+        return x.unaryExpr(CwiseRelu<S>());
     }
-    template <typename S, int A, int B>
-    const static mat<S, A, B> gprime(
-        const mat<S, A, B> &error,
-        const mat<S, A, B> &output)
+    template <typename S, int A, int Batch>
+    const static mat<S, A, Batch> gprime(
+        const mat<S, A, Batch> &x,
+        const mat<S, A, Batch> &y)
     {
-        return error.binaryExpr(output, ReluPrime<S>());
+        return x.unaryExpr(ReluPrime<S>());
     }
 };
 
@@ -117,21 +115,21 @@ namespace cost
 struct MSE
 {
 public:
-    template <typename S, int A, int B>
-    const static mat<S, A, B> error(
-        const mat<S, A, B> &output,
-        const mat<S, A, B> &expected)
+    template <typename S, int A, int Batch>
+    const static mat<S, A, Batch> error(
+        const mat<S, A, Batch> &output,
+        const mat<S, A, Batch> &expected)
     {
         return output - expected;
     }
 
-    template <typename S, int A, int B>
-    const static vec<S, B> cost(
-        const mat<S, A, B> &output,
-        const mat<S, A, B> &expected)
+    template <typename S, int A, int Batch>
+    const static vec<S, Batch> cost(
+        const mat<S, A, Batch> &output,
+        const mat<S, A, Batch> &expected)
     {
         auto diff = output - expected;
-        return diff.transpose() * diff;
+        return diff.colwise().norm();
     }
 };
 

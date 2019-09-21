@@ -10,8 +10,8 @@ namespace neural
 {
 
 template <
-	typename Scalar,
-	typename Cost,
+	typename S,
+	typename C,
 	typename InputLayer, typename... HiddenLayers>
 class Net
 {
@@ -21,6 +21,9 @@ private:
 public:
 	Net() {}
 	Net(std::tuple<InputLayer, HiddenLayers...> layers) : layers(layers) {}
+
+	using Scalar = S;
+	using Cost = C;
 
 	static const int Inputs = InputLayer::Inputs;
 	static const int Outputs = std::tuple_element<
@@ -39,11 +42,13 @@ public:
 		mat<Scalar, Outputs, Batch> expected)
 	{
 		feedforward_backward(learning_rate, input, expected);
+		// exit(1);
 	}
 
 	// Predict the result given the input
 	template <int Batch>
-	mat<Scalar, Outputs, Batch> predict(const mat<Scalar, Inputs, Batch> &input)
+	mat<Scalar, Outputs, Batch> predict(
+		const mat<Scalar, Inputs, Batch> &input)
 	{
 		if constexpr (sizeof...(HiddenLayers) == 0)
 		{

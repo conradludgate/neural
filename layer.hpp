@@ -6,8 +6,6 @@
 
 #include "neural/util.hpp"
 
-class ANN;
-
 namespace neural
 {
 
@@ -43,8 +41,8 @@ public:
 	template <int Batch>
 	mat<Scalar, Outputs, Batch> feedforward(mat<Scalar, Inputs, Batch> input)
 	{
-		return Activation::template g<Scalar, Outputs, Batch>(
-			weight * input + bias);
+		auto linear = (weight * input).colwise() + bias;
+		return Activation::template g<Scalar, Outputs, Batch>(linear);
 	}
 
 	template <int Batch, typename Next>
@@ -54,24 +52,21 @@ public:
 		mat<Scalar, Next::Outputs, Batch> expected,
 		Next next)
 	{
-		auto output = Activation::template g<Scalar, Outputs, Batch>(
-			weight * input + bias);
+		auto linear = (weight * input).colwise() + bias;
+		auto output = Activation::template g<Scalar, Outputs, Batch>(linear);
 
-		auto error = Activation::template gprime<Scalar, Outputs, Batch>(
-			next.feedforward_backward(learning_rate, output, expected),
-			output);
+		auto error = next.feedforward_backward(learning_rate, output, expected);
+		auto gprime = Activation::template gprime<Scalar, Outputs, Batch>(linear, output);
+		error.array() *= gprime.array() / Batch;
 
 		auto dinput = weight.transpose() * error;
-		bias += error.rowwise().sum();
-		weight += error * input.transpose() / Batch;
+		bias -= error.rowwise().sum();
+		weight -= error * input.transpose();
 
-		return learning_rate * dinput;
+		return dinput;
 	}
 
 private:
-	vec<Scalar, Inputs> last_input;
-	vec<Scalar, Outputs> last_output;
-
 	mat<Scalar, Outputs, Inputs> weight;
 	vec<Scalar, Outputs> bias;
 };
