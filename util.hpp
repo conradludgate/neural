@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Eigen/Dense>
-#include <functional>
 
 namespace neural
 {
@@ -43,61 +42,77 @@ namespace activation
 
 class Sigmoid
 {
+private:
+    template <typename S>
+    struct CwiseSigmoid
+    {
+        const S operator()(const S &x) const
+        {
+            return 1 / (exp(-x) + 1);
+        }
+    };
+
+    template <typename S>
+    struct SigmoidPrime
+    {
+        typedef S result_type;
+        const S operator()(const S &a, const S &b) const
+        {
+            return a * (1 - b) * b;
+        }
+    };
+
 public:
     template <typename S, int A, int B>
-    static mat<S, A, B> g(const mat<S, A, B> &v)
+    const static mat<S, A, B> g(const mat<S, A, B> &v)
     {
-        return v.unaryExpr(std::ref(Sigmoid::sigmoid<S>));
+        return v.unaryExpr(CwiseSigmoid<S>());
     }
     template <typename S, int A, int B>
-    static mat<S, A, B> gprime(const mat<S, A, B> &error, const mat<S, A, B> &output)
+    const static mat<S, A, B> gprime(const mat<S, A, B> &error, const mat<S, A, B> &output)
     {
-        return error.binaryExpr(output, std::ref(Sigmoid::sigmoid_prime<S>));
-    }
-
-    template <typename S>
-    static S sigmoid(const S &x)
-    {
-        return 1 / (exp(-x) + 1);
-    }
-
-    template <typename S>
-    static S sigmoid_prime(const S &a, const S &b)
-    {
-        return a * (1 - b) * b;
+        return error.binaryExpr(output, SigmoidPrime<S>());
     }
 };
 
 class Relu
 {
+private:
+    template <typename S>
+    struct CwiseRelu
+    {
+        const S operator()(const S &x) const
+        {
+            if (x > 0)
+                return x;
+            else
+                return 0;
+        }
+    };
+
+    template <typename S>
+    struct ReluPrime
+    {
+        typedef S result_type;
+        const S operator()(const S &a, const S &b) const
+        {
+            if (b > 0)
+                return a;
+            else
+                return 0;
+        }
+    };
+
 public:
     template <typename S, int A, int B>
-    static mat<S, A, B> g(const mat<S, A, B> &v)
+    const static mat<S, A, B> g(const mat<S, A, B> &v)
     {
-        return v.unaryExpr(std::ref(Relu::relu<S>));
+        return v.unaryExpr(CwiseRelu<S>());
     }
     template <typename S, int A, int B>
-    static mat<S, A, B> gprime(const mat<S, A, B> &error, const mat<S, A, B> &output)
+    const static mat<S, A, B> gprime(const mat<S, A, B> &error, const mat<S, A, B> &output)
     {
-        return error.binaryExpr(output, std::ref(Relu::relu_prime<S>));
-    }
-
-    template <typename S>
-    static S relu(const S &x)
-    {
-        if (x > 0)
-            return x;
-        else
-            return 0;
-    }
-
-    template <typename S>
-    static S relu_prime(const S &a, const S &b)
-    {
-        if (b > 0)
-            return a;
-        else
-            return 0;
+        return error.binaryExpr(output, ReluPrime<S>());
     }
 };
 
@@ -110,9 +125,16 @@ class MSE
 {
 public:
     template <typename S, int A, int B>
-    static mat<S, A, B> cost(mat<S, A, B> output, mat<S, A, B> expected)
+    const static mat<S, A, B> error(const mat<S, A, B> &output, const mat<S, A, B> &expected)
     {
         return output - expected;
+    }
+
+    template <typename S, int A, int B>
+    const static vec<S, B> cost(const mat<S, A, B> &output, const mat<S, A, B> &expected)
+    {
+        auto diff = output - expected;
+        return diff.transpose() * diff;
     }
 };
 

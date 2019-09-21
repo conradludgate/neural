@@ -11,9 +11,9 @@ public:
     static const int Outputs = O;
 
     template <int Batch>
-    mat<Scalar, Outputs, Batch> feedforward_backward(Scalar learning_rate, mat<Scalar, Outputs, Batch> input, mat<Scalar, Outputs, Batch> expected)
+    mat<Scalar, Outputs, Batch> feedforward_backward(Scalar learning_rate, mat<Scalar, Outputs, Batch> output, mat<Scalar, Outputs, Batch> expected)
     {
-        return learning_rate * Cost::template cost<Scalar, Outputs, Batch>(input, expected);
+        return learning_rate * Cost::template error<Scalar, Outputs, Batch>(output, expected);
     }
 };
 

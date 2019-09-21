@@ -26,28 +26,16 @@ public:
 
 	std::ostream &save(std::ostream &os)
 	{
-		for (int i = 0; i < Outputs; i++)
-		{
-			for (int j = 0; j < Inputs; j++)
-			{
-				os << weight[i, j];
-			}
-			os << bias[i];
-		}
+		os.write((char *)weight.data(), sizeof(Scalar) * Inputs * Outputs);
+		os.write((char *)bias.data(), sizeof(Scalar) * Outputs);
 
 		return os;
 	}
 
 	std::istream &load(std::istream &is)
 	{
-		for (int i = 0; i < Outputs; i++)
-		{
-			for (int j = 0; j < Inputs; j++)
-			{
-				is << weight[i, j];
-			}
-			is << bias[i];
-		}
+		is.read((char *)weight.data(), sizeof(Scalar) * Inputs * Outputs);
+		is.read((char *)bias.data(), sizeof(Scalar) * Outputs);
 
 		return is;
 	}
@@ -68,8 +56,8 @@ public:
 			output);
 
 		auto dinput = weight.transpose() * error;
-		bias += error;
-		weight += error * input.transpose();
+		bias -= error;
+		weight -= error * input.transpose();
 
 		return learning_rate * dinput;
 	}
