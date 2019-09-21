@@ -56,8 +56,8 @@ public:
 			output);
 
 		auto dinput = weight.transpose() * error;
-		bias -= error;
-		weight -= error * input.transpose();
+		bias += error.rowwise().sum();
+		weight += error * input.transpose() / Batch;
 
 		return learning_rate * dinput;
 	}

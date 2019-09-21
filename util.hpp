@@ -5,23 +5,11 @@
 namespace neural
 {
 
-// template <int A>
-// using vec = Eigen::Matrix<Scalar, A, 1>;
-
-// template <int A, int B>
-// using mat = Eigen::Matrix<Scalar, A, B>;
-
 template <typename S, int A>
 using vec = Eigen::Matrix<S, A, 1>;
 
 template <typename S, int A, int B>
 using mat = Eigen::Matrix<S, A, B>;
-
-// template <typename Scalar, int Output, int Batch, typename Activation, typename Next>
-// mat<Scalar, Output, Batch> next(mat<Scalar, Output, Batch> output, mat<Scalar, Next::Output, Batch> expected)
-// {
-//     return Next::template feedforwad_backward<Batch, decltype(Next::next())>(output, expected);
-// }
 
 // https://stackoverflow.com/a/39101723
 template <typename Tuple, std::size_t... Is>
@@ -40,7 +28,7 @@ auto pop_front(const Tuple &tuple)
 namespace activation
 {
 
-class Sigmoid
+struct Sigmoid
 {
 private:
     template <typename S>
@@ -75,7 +63,7 @@ public:
     }
 };
 
-class Relu
+struct Relu
 {
 private:
     template <typename S>
@@ -121,7 +109,7 @@ public:
 namespace cost
 {
 
-class MSE
+struct MSE
 {
 public:
     template <typename S, int A, int B>
