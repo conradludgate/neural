@@ -9,19 +9,11 @@
 namespace neural
 {
 
-// template<int I, int O>
-// class ANN
-// {
-// public:
-// 	virtual void random() = 0;
-// 	virtual vec<Outputs>& feedforward(vec<Inputs>&) = 0;
-// 	virtual vec<Inputs>& feedbackward(vec<Outputs>&) = 0;
-// 	virtual std::ostream& operator<<(std::ostream&) = 0;
-// 	virtual std::istream& operator>>(std::istream&) = 0;
-// };
-
-template <typename Scalar, typename Cost, typename InputLayer, typename... HiddenLayers>
-class Net //: public ANN
+template <
+	typename Scalar,
+	typename Cost,
+	typename InputLayer, typename... HiddenLayers>
+class Net
 {
 private:
 	std::tuple<InputLayer, HiddenLayers...> layers;
@@ -31,17 +23,22 @@ public:
 	Net(std::tuple<InputLayer, HiddenLayers...> layers) : layers(layers) {}
 
 	static const int Inputs = InputLayer::Inputs;
-	static const int Outputs = std::tuple_element<sizeof...(HiddenLayers), decltype(layers)>::type::Outputs;
+	static const int Outputs = std::tuple_element<
+		sizeof...(HiddenLayers), decltype(layers)>::type::Outputs;
 
 	void random() { random<0>(); }
 	std::ostream &operator<<(std::ostream &os) { return save<0>(os); }
 	std::istream &operator>>(std::istream &is) { return load<0>(is); }
 
-	// Train the network using a batch of inputs and their corresponding expected values
+	// Train the network using a batch of inputs
+	// and their corresponding expected values
 	template <int Batch>
-	void train(Scalar lr, mat<Scalar, Inputs, Batch> input, mat<Scalar, Outputs, Batch> expected)
+	void train(
+		Scalar learning_rate,
+		mat<Scalar, Inputs, Batch> input,
+		mat<Scalar, Outputs, Batch> expected)
 	{
-		feedforward_backward(lr, input, expected);
+		feedforward_backward(learning_rate, input, expected);
 	}
 
 	// Predict the result given the input
@@ -55,31 +52,41 @@ public:
 		}
 		else
 		{
-			// Otherwise calculate the intermediate result and then feed it through to the hidden layers
+			// Otherwise calculate the intermediate result
+			// and then feed it through to the hidden layers
 			auto output = std::get<0>(layers).feedforward(input);
-			return Net<Scalar, Cost, HiddenLayers...>(neural::pop_front(layers)).predict(output);
+			return Net<Scalar, Cost, HiddenLayers...>(
+					   neural::pop_front(layers))
+				.predict(output);
 		}
 	}
 
 	// The main component of training
 	template <int Batch>
-	mat<Scalar, Inputs, Batch> feedforward_backward(Scalar learning_rate, mat<Scalar, Inputs, Batch> input, mat<Scalar, Outputs, Batch> expected)
+	mat<Scalar, Inputs, Batch> feedforward_backward(
+		Scalar learning_rate,
+		mat<Scalar, Inputs, Batch> input,
+		mat<Scalar, Outputs, Batch> expected)
 	{
 		if constexpr (sizeof...(HiddenLayers) == 0)
 		{
-			// If no hidden layers left, get the first layer to feedforward_backward
+			// If no hidden layers left
+			// get the first layer to feedforward_backward
 			// using the cost layer as it's next step
 			return std::get<0>(layers)
 				.feedforward_backward(
-					learning_rate, input, expected, CostLayer<Scalar, Cost, Outputs>());
+					learning_rate, input, expected,
+					CostLayer<Scalar, Cost, Outputs>());
 		}
 		else
 		{
-			// Otherwise, feedforward_backward with the remaining hiddenlayers as the next step
+			// Otherwise, feedforward_backward with the
+			// remaining hiddenlayers as the next step
 			return std::get<0>(layers)
 				.feedforward_backward(
 					learning_rate, input, expected,
-					Net<Scalar, Cost, HiddenLayers...>(neural::pop_front(layers)));
+					Net<Scalar, Cost, HiddenLayers...>(
+						neural::pop_front(layers)));
 		}
 	}
 

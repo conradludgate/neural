@@ -12,7 +12,7 @@ namespace neural
 {
 
 template <typename Scalar, int I, int O, typename Activation>
-class LinearLayer //: public ANN
+class LinearLayer
 {
 public:
 	static const int Inputs = I;
@@ -43,13 +43,19 @@ public:
 	template <int Batch>
 	mat<Scalar, Outputs, Batch> feedforward(mat<Scalar, Inputs, Batch> input)
 	{
-		return Activation::template g<Scalar, Outputs, Batch>(weight * input + bias);
+		return Activation::template g<Scalar, Outputs, Batch>(
+			weight * input + bias);
 	}
 
 	template <int Batch, typename Next>
-	mat<Scalar, Inputs, Batch> feedforward_backward(Scalar learning_rate, mat<Scalar, Inputs, Batch> input, mat<Scalar, Next::Outputs, Batch> expected, Next next)
+	mat<Scalar, Inputs, Batch> feedforward_backward(
+		Scalar learning_rate,
+		mat<Scalar, Inputs, Batch> input,
+		mat<Scalar, Next::Outputs, Batch> expected,
+		Next next)
 	{
-		auto output = Activation::template g<Scalar, Outputs, Batch>(weight * input + bias);
+		auto output = Activation::template g<Scalar, Outputs, Batch>(
+			weight * input + bias);
 
 		auto error = Activation::template gprime<Scalar, Outputs, Batch>(
 			next.feedforward_backward(learning_rate, output, expected),

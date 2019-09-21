@@ -22,7 +22,8 @@ template <typename Tuple>
 auto pop_front(const Tuple &tuple)
 {
     return pop_front_impl(tuple,
-                          std::make_index_sequence<std::tuple_size<Tuple>::value - 1>());
+                          std::make_index_sequence<
+                              std::tuple_size<Tuple>::value - 1>());
 }
 
 namespace activation
@@ -57,7 +58,9 @@ public:
         return v.unaryExpr(CwiseSigmoid<S>());
     }
     template <typename S, int A, int B>
-    const static mat<S, A, B> gprime(const mat<S, A, B> &error, const mat<S, A, B> &output)
+    const static mat<S, A, B> gprime(
+        const mat<S, A, B> &error,
+        const mat<S, A, B> &output)
     {
         return error.binaryExpr(output, SigmoidPrime<S>());
     }
@@ -98,7 +101,9 @@ public:
         return v.unaryExpr(CwiseRelu<S>());
     }
     template <typename S, int A, int B>
-    const static mat<S, A, B> gprime(const mat<S, A, B> &error, const mat<S, A, B> &output)
+    const static mat<S, A, B> gprime(
+        const mat<S, A, B> &error,
+        const mat<S, A, B> &output)
     {
         return error.binaryExpr(output, ReluPrime<S>());
     }
@@ -113,13 +118,17 @@ struct MSE
 {
 public:
     template <typename S, int A, int B>
-    const static mat<S, A, B> error(const mat<S, A, B> &output, const mat<S, A, B> &expected)
+    const static mat<S, A, B> error(
+        const mat<S, A, B> &output,
+        const mat<S, A, B> &expected)
     {
         return output - expected;
     }
 
     template <typename S, int A, int B>
-    const static vec<S, B> cost(const mat<S, A, B> &output, const mat<S, A, B> &expected)
+    const static vec<S, B> cost(
+        const mat<S, A, B> &output,
+        const mat<S, A, B> &expected)
     {
         auto diff = output - expected;
         return diff.transpose() * diff;
