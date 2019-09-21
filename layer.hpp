@@ -51,7 +51,7 @@ public:
 	{
 		auto output = Activation::template g<Scalar, Outputs, Batch>(weight * input + bias);
 
-		auto error = Activation::template gprime<Scalar, Outputs>(
+		auto error = Activation::template gprime<Scalar, Outputs, Batch>(
 			next.feedforward_backward(learning_rate, output, expected),
 			output);
 
