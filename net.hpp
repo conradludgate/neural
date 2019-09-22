@@ -30,8 +30,15 @@ public:
 		sizeof...(HiddenLayers), decltype(layers)>::type::Outputs;
 
 	void random() { random<0>(); }
-	std::ostream &operator<<(std::ostream &os) { return save<0>(os); }
-	std::istream &operator>>(std::istream &is) { return load<0>(is); }
+
+	friend std::ostream &operator<<(std::ostream &os, const Net &net)
+	{
+		return net.save<0>(os);
+	}
+	friend std::istream &operator>>(std::istream &is, Net &net)
+	{
+		return net.load<0>(is);
+	}
 
 	// Train the network using a batch of inputs
 	// and their corresponding expected values
@@ -42,7 +49,6 @@ public:
 		mat<Scalar, Outputs, Batch> expected)
 	{
 		feedforward_backward(learning_rate, input, expected);
-		// exit(1);
 	}
 
 	// Predict the result given the input
@@ -106,10 +112,10 @@ private:
 	}
 
 	template <int n>
-	std::ostream &save(std::ostream &os)
+	std::ostream &save(std::ostream &os) const
 	{
 		// Save all the layers
-		std::get<n>(layers).save(os);
+		os << std::get<n>(layers);
 		if constexpr (n != sizeof...(HiddenLayers))
 		{
 			save<n + 1>(os);
@@ -121,7 +127,7 @@ private:
 	std::istream &load(std::istream &is)
 	{
 		// Load all the layers
-		std::get<n>(layers).load(is);
+		is >> std::get<n>(layers);
 		if constexpr (n != sizeof...(HiddenLayers))
 		{
 			load<n + 1>(is);

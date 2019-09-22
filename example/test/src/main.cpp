@@ -1,10 +1,11 @@
 #include <iostream>
 
 #include <cstdlib>
-#include <ctime>
+#include <csignal>
 
 #include "neural/net.hpp"
 #include "neural/layer.hpp"
+#include "neural/serial.hpp"
 
 template <int A>
 using vec = neural::vec<float, A>;
@@ -13,51 +14,77 @@ template <int A, int B>
 using mat = neural::mat<float, A, B>;
 
 typedef neural::Net<
-    float,                                                          // Scalar type
-    neural::cost::MSE,                                              // Cost function
-    neural::LinearLayer<float, 10, 10, neural::activation::Linear>> // First Layer
-    // neural::LinearLayer<float, 10, 1, neural::activation::Linear>>  // Second Layer
+    float,                                                        // Scalar type
+    neural::cost::MSE,                                            // Cost function
+    neural::LinearLayer<float, 2, 4, neural::activation::Linear>, // First Layer
+    neural::LinearLayer<float, 4, 1, neural::activation::Linear>> // Second Layer
     NN;
 
 template <int Batch>
 struct Sum
 {
-    mat<10, Batch> input;
-    mat<10, Batch> expected;
+    mat<NN::Inputs, Batch> input;
+    mat<NN::Outputs, Batch> expected;
 
     Sum()
     {
-        input = mat<10, Batch>::Random();
-        expected = input;
+        input = mat<NN::Inputs, Batch>::Random();
+        expected = input.colwise().sum();
     }
 };
 
-const int train_iter = 100;
+const int train_iter = 1000;
 const int training_batch_size = 512;
-const int test_iter = 10;
+const int test_iter = 100;
 const int testing_batch_size = 256;
+
+NN test;
+
+void on_exit()
+{
+    std::cout << "Saving " << neural::serial::save(test, "networks", "test") << std::endl;
+}
+
+void sig_handler(int s)
+{
+    on_exit();
+    exit(0);
+}
 
 int main()
 {
     srand(time(nullptr));
 
-    // Create and initialise the network
-    NN test;
-    test.random();
+    auto filename = neural::serial::load(test, "networks", "test");
+    if (filename.length())
+        std::cout << "Loading " << filename << std::endl;
+    else
+    {
+        test.random();
+        std::cout << "Loading random data" << std::endl;
+    }
+
+    signal(SIGINT, sig_handler);
 
     // Set the learning rate for the network (default 0.1)
     float lr = 0.2;
 
     // Train until satisfied.
-    for (int epochs = 0; epochs < 100; epochs++)
+    float cost = 0.5;
+    int epochs = 0;
+    while (cost > 1E-6)
     {
+        epochs++;
+
+        // Train batch
         for (int i = 0; i < train_iter; i++)
         {
             auto training_data = Sum<training_batch_size>();
             test.train(lr, training_data.input, training_data.expected);
         }
 
-        float cost = 0;
+        // Test batch
+        cost = 0;
         for (int i = 0; i < test_iter; i++)
         {
             auto testing_data = Sum<testing_batch_size>();
@@ -79,4 +106,6 @@ int main()
               << outputs << std::endl
               << "Target" << std::endl
               << testing_data.expected << std::endl;
+
+    on_exit();
 }

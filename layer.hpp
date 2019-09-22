@@ -22,18 +22,18 @@ public:
 		bias = vec<Scalar, Outputs>::Random();
 	}
 
-	std::ostream &save(std::ostream &os)
+	friend std::ostream &operator<<(std::ostream &os, const LinearLayer &layer)
 	{
-		os.write((char *)weight.data(), sizeof(Scalar) * Inputs * Outputs);
-		os.write((char *)bias.data(), sizeof(Scalar) * Outputs);
+		os.write((char *)(layer.weight.data()), sizeof(Scalar) * Inputs * Outputs);
+		os.write((char *)(layer.bias.data()), sizeof(Scalar) * Outputs);
 
 		return os;
 	}
 
-	std::istream &load(std::istream &is)
+	friend std::istream &operator>>(std::istream &is, LinearLayer &layer)
 	{
-		is.read((char *)weight.data(), sizeof(Scalar) * Inputs * Outputs);
-		is.read((char *)bias.data(), sizeof(Scalar) * Outputs);
+		is.read(reinterpret_cast<char *>(layer.weight.data()), sizeof(Scalar) * Inputs * Outputs);
+		is.read(reinterpret_cast<char *>(layer.bias.data()), sizeof(Scalar) * Inputs * Outputs);
 
 		return is;
 	}
