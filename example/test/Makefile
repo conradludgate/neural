@@ -2,7 +2,7 @@
 # Compiler flags
 #
 CXX = g++
-CXXFLAGS = -std=c++17 -I ../../..
+CXXFLAGS = -std=c++17 -I include
 
 ifeq ($(OS),Windows_NT)
     # Window's not currently supported
