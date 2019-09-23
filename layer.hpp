@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "neural/util.hpp"
+#include "neural/serial.hpp"
 
 namespace neural
 {
@@ -15,6 +16,9 @@ class LinearLayer
 public:
 	static const int Inputs = I;
 	static const int Outputs = O;
+	static const int Size = sizeof(Scalar) * Inputs * Outputs + sizeof(Scalar) * Outputs;
+
+	static const serial::layer_info info;
 
 	void random()
 	{
@@ -24,16 +28,16 @@ public:
 
 	friend std::ostream &operator<<(std::ostream &os, const LinearLayer &layer)
 	{
-		os.write((char *)(layer.weight.data()), sizeof(Scalar) * Inputs * Outputs);
-		os.write((char *)(layer.bias.data()), sizeof(Scalar) * Outputs);
+		os.write((char *)layer.weight.data(), sizeof(Scalar) * Inputs * Outputs);
+		os.write((char *)layer.bias.data(), sizeof(Scalar) * Outputs);
 
 		return os;
 	}
 
 	friend std::istream &operator>>(std::istream &is, LinearLayer &layer)
 	{
-		is.read(reinterpret_cast<char *>(layer.weight.data()), sizeof(Scalar) * Inputs * Outputs);
-		is.read(reinterpret_cast<char *>(layer.bias.data()), sizeof(Scalar) * Inputs * Outputs);
+		is.read((char *)layer.weight.data(), sizeof(Scalar) * Inputs * Outputs);
+		is.read((char *)layer.bias.data(), sizeof(Scalar) * Outputs);
 
 		return is;
 	}
@@ -70,5 +74,9 @@ private:
 	mat<Scalar, Outputs, Inputs> weight;
 	vec<Scalar, Outputs> bias;
 };
+
+template <typename S, int I, int O, typename A>
+const auto LinearLayer<S, I, O, A>::info =
+	serial::layer_info(serial::layer_type::linear_layer, Inputs, Outputs);
 
 } // namespace neural

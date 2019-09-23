@@ -5,6 +5,7 @@
 
 #include "neural/util.hpp"
 #include "neural/cost_layer.hpp"
+#include "neural/template_util.hpp"
 
 namespace neural
 {
@@ -28,6 +29,10 @@ public:
 	static const int Inputs = InputLayer::Inputs;
 	static const int Outputs = std::tuple_element<
 		sizeof...(HiddenLayers), decltype(layers)>::type::Outputs;
+	static const int Size = utils::__get_size<InputLayer, HiddenLayers...>();
+	static const int NumLayers = sizeof...(HiddenLayers) + 1;
+
+	static const decltype(utils::__get_info<InputLayer, HiddenLayers...>()) info;
 
 	void random() { random<0>(); }
 
@@ -135,5 +140,12 @@ private:
 		return is;
 	}
 };
+
+template <
+	typename S,
+	typename C,
+	typename IL, typename... HLs>
+const decltype(utils::__get_info<IL, HLs...>()) Net<S, C, IL, HLs...>::info
+	 = utils::__get_info<IL, HLs...>();
 
 } // namespace neural

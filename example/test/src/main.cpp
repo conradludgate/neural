@@ -14,10 +14,12 @@ template <int A, int B>
 using mat = neural::mat<float, A, B>;
 
 typedef neural::Net<
-    float,                                                        // Scalar type
-    neural::cost::MSE,                                            // Cost function
-    neural::LinearLayer<float, 2, 4, neural::activation::Linear>, // First Layer
-    neural::LinearLayer<float, 4, 1, neural::activation::Linear>> // Second Layer
+    float,                           // Scalar type
+    neural::cost::MSE,               // Cost function
+    neural::LinearLayer<float, 2, 6, // First Layer
+                        neural::activation::Linear>,
+    neural::LinearLayer<float, 6, 1, // Second Layer
+                        neural::activation::Linear>>
     NN;
 
 template <int Batch>
@@ -42,7 +44,8 @@ NN test;
 
 void on_exit()
 {
-    std::cout << "Saving " << neural::serial::save(test, "networks", "test") << std::endl;
+    std::cout << "Saving "
+              << neural::serial::save(test, "networks", "test") << std::endl;
 }
 
 void sig_handler(int s)
@@ -89,7 +92,8 @@ int main()
         {
             auto testing_data = Sum<testing_batch_size>();
             auto output = test.predict(testing_data.input);
-            cost += NN::Cost::cost(output, testing_data.expected).sum() / testing_batch_size / test_iter;
+            auto c = NN::Cost::cost(output, testing_data.expected).sum();
+            cost += c / testing_batch_size / test_iter;
         }
 
         // Output each step of our training, so we know it's still running
